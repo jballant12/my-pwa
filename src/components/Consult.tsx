@@ -9,7 +9,7 @@ import { getAuth } from 'firebase/auth';
 import { query, where } from 'firebase/firestore';
 import { TrainerContext } from '../context/TrainerContext';
 import { UserContext } from '../context/UserContext';
-import { createVapi } from '@vapi-ai/web';
+import Vapi from '@vapi-ai/web';
 
 interface Trainer {
   id: string;
@@ -44,7 +44,7 @@ export default function Consult() {
   const [transcript, setTranscript] = useState<string>("");
 
   useEffect(() => {
-    const vapi = createVapi("ee125a2c-2039-4a9e-8384-806f6abc1824");
+    const vapi = new Vapi("ee125a2c-2039-4a9e-8384-806f6abc1824");
     setVapiInstance(vapi);
 
     vapi.on("transcript", (message) => {
