@@ -1,0 +1,87 @@
+
+[eslint] 
+src/components/Workout.tsx
+  Line 6:10:  'doc' is defined but never used     @typescript-eslint/no-unused-vars
+  Line 6:15:  'getDoc' is defined but never used  @typescript-eslint/no-unused-vars
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+WARNING in [eslint] 
+src/components/Workout.tsx
+  Line 6:10:  'doc' is defined but never used     @typescript-eslint/no-unused-vars
+  Line 6:15:  'getDoc' is defined but never used  @typescript-eslint/no-unused-vars
+
+webpack compiled with 1 warning
+ERROR in src/components/Consult.tsx:51:13
+TS2345: Argument of type '"transcript"' is not assignable to parameter of type 'VapiEventNames'.
+    49 |     setVapiInstance(vapi);
+    50 |
+  > 51 |     vapi.on("transcript", (message) => {
+       |             ^^^^^^^^^^^^
+    52 |       if (message.type === "partial") {
+    53 |         setPartialTranscript(message.transcript);
+    54 |       } else if (message.type === "final") {
+
+ERROR in src/components/Consult.tsx:51:28
+TS7006: Parameter 'message' implicitly has an 'any' type.
+    49 |     setVapiInstance(vapi);
+    50 |
+  > 51 |     vapi.on("transcript", (message) => {
+       |                            ^^^^^^^
+    52 |       if (message.type === "partial") {
+    53 |         setPartialTranscript(message.transcript);
+    54 |       } else if (message.type === "final") {
+
+ERROR in src/components/Trainer.tsx:4:29
+TS2305: Module '"./ui/card"' has no exported member 'CardHeader'.
+    2 | import { useNavigate } from 'react-router-dom';
+    3 | import { Button } from "./ui/button";
+  > 4 | import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+      |                             ^^^^^^^^^^
+    5 | import { Input } from "./ui/input";
+    6 | import { Label } from "./ui/label";
+    7 | import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
+
+ERROR in src/components/Trainer.tsx:4:41
+TS2305: Module '"./ui/card"' has no exported member 'CardTitle'.
+    2 | import { useNavigate } from 'react-router-dom';
+    3 | import { Button } from "./ui/button";
+  > 4 | import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+      |                                         ^^^^^^^^^
+    5 | import { Input } from "./ui/input";
+    6 | import { Label } from "./ui/label";
+    7 | import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
+
+ERROR in src/components/Workout.tsx:38:45
+TS2339: Property 'weekly_training_split' does not exist on type '{ id: string; }'.
+    36 |           console.log("Using plan:", latestPlan);
+    37 |
+  > 38 |           setWeeklyTrainingSplit(latestPlan.weekly_training_split || '');
+       |                                             ^^^^^^^^^^^^^^^^^^^^^
+    39 |           setGoals(latestPlan.goals || '');
+    40 |         } else {
+    41 |           console.log("No training plans found");
+
+ERROR in src/components/Workout.tsx:39:31
+TS2339: Property 'goals' does not exist on type '{ id: string; }'.
+    37 |
+    38 |           setWeeklyTrainingSplit(latestPlan.weekly_training_split || '');
+  > 39 |           setGoals(latestPlan.goals || '');
+       |                               ^^^^^
+    40 |         } else {
+    41 |           console.log("No training plans found");
+    42 |         }
+
+ERROR in src/context/TrainerContext.tsx:50:23
+TS2345: Argument of type '({ id: string; name: any; coachingStyle: any; personality: any; trainervoice: any; } | null)[]' is not assignable to parameter of type 'SetStateAction<Trainer[]>'.
+  Type '({ id: string; name: any; coachingStyle: any; personality: any; trainervoice: any; } | null)[]' is not assignable to type 'Trainer[]'.
+    Type '{ id: string; name: any; coachingStyle: any; personality: any; trainervoice: any; } | null' is not assignable to type 'Trainer'.
+      Type 'null' is not assignable to type 'Trainer'.
+    48 |           
+    49 |           console.log("Fetched trainers:", trainersList);
+  > 50 |           setTrainers(trainersList);
+       |                       ^^^^^^^^^^^^
+    51 |         } catch (error) {
+    52 |           console.error("Error processing trainers:", error);
+    53 |           setTrainers([]);
