@@ -38,11 +38,6 @@ export default function HomeScreen() {
                   <h2 className="text-2xl font-semibold text-white">{label}</h2>
                 </div>
               </CardContent>
-                <div className="flex flex-col items-center justify-center h-full space-y-4">
-                  <Icon className="w-12 h-12" />
-                  <h2 className="text-2xl font-semibold">{label}</h2>
-                </div>
-              </CardContent>
             </Card>
           ))}
         </div>

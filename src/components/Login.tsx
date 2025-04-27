@@ -31,8 +31,8 @@ export default function Login() {
     
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <form onSubmit={handleLogin} className="p-6 bg-white rounded shadow-md">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 to-black">
+      <form onSubmit={handleLogin} className="p-6 bg-white/10 backdrop-blur-sm rounded-xl shadow-2xl text-white">
         <h1 className="text-2xl mb-4">Login</h1>
         {error && <p className="text-red-600">{error}</p>}
         <div className="mb-4">
