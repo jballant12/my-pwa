@@ -4,7 +4,7 @@ import { Card, CardContent } from "./ui/card";
 import { Button } from "./ui/button";
 import Navigation from './Navigation';
 import { auth, db } from '../firebase';
-import { doc, getDoc, collection } from 'firebase/firestore';
+import { doc, getDoc, collection, getDocs } from 'firebase/firestore';
 import { UserContext } from '../context/UserContext';
 
 const Workout: React.FC = () => {
@@ -19,19 +19,26 @@ const Workout: React.FC = () => {
       if (!auth.currentUser) return;
 
       try {
+        console.log("Fetching training plan for user:", auth.currentUser.uid);
         const trainingPlanRef = collection(db, 'Users', auth.currentUser.uid, 'training_plan');
         const querySnapshot = await getDocs(trainingPlanRef);
         
+        console.log("Query snapshot:", querySnapshot.size, "documents");
+        
         if (!querySnapshot.empty) {
-          // Get the most recent document by timestamp
-          const sortedDocs = querySnapshot.docs.sort((a, b) => 
-            b.data().timestamp.toMillis() - a.data().timestamp.toMillis()
-          );
-          const latestPlan = sortedDocs[0].data();
+          const docs = querySnapshot.docs.map(doc => ({
+            ...doc.data(),
+            id: doc.id
+          }));
+          console.log("All training plans:", docs);
           
-          setWeeklyTrainingSplit(latestPlan.weekly_training_split);
-          setGoals(latestPlan.goals);
-          console.log("Fetched training plan:", latestPlan);
+          const latestPlan = docs[0];
+          console.log("Using plan:", latestPlan);
+          
+          setWeeklyTrainingSplit(latestPlan.weekly_training_split || '');
+          setGoals(latestPlan.goals || '');
+        } else {
+          console.log("No training plans found");
         }
       } catch (error) {
         console.error("Error fetching training plan:", error);
