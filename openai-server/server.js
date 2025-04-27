@@ -1,4 +1,3 @@
-
 const express = require('express');
 const cors = require('cors');
 const OpenAI = require('openai');
@@ -81,7 +80,7 @@ app.post('/analyze-image', async (req, res) => {
       },
     ];
 
-    const response = await openaiImage.chat.completions.create({
+    const response = await openai.chat.completions.create({
       model: 'gpt-4-vision-preview', 
       messages: messages,
     });
@@ -100,7 +99,7 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../build', 'index.html'));
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = 5000;
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on port ${PORT}`);
 });
