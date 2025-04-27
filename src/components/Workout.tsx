@@ -19,13 +19,19 @@ const Workout: React.FC = () => {
       if (!auth.currentUser) return;
 
       try {
-        const trainingPlanRef = doc(db, 'Users', auth.currentUser.uid, 'training_plan', 'current');
-        const trainingPlanDoc = await getDoc(trainingPlanRef);
+        const trainingPlanRef = collection(db, 'Users', auth.currentUser.uid, 'training_plan');
+        const querySnapshot = await getDocs(trainingPlanRef);
         
-        if (trainingPlanDoc.exists()) {
-          const data = trainingPlanDoc.data();
-          setWeeklyTrainingSplit(data.weekly_training_split);
-          setGoals(data.goals);
+        if (!querySnapshot.empty) {
+          // Get the most recent document by timestamp
+          const sortedDocs = querySnapshot.docs.sort((a, b) => 
+            b.data().timestamp.toMillis() - a.data().timestamp.toMillis()
+          );
+          const latestPlan = sortedDocs[0].data();
+          
+          setWeeklyTrainingSplit(latestPlan.weekly_training_split);
+          setGoals(latestPlan.goals);
+          console.log("Fetched training plan:", latestPlan);
         }
       } catch (error) {
         console.error("Error fetching training plan:", error);
