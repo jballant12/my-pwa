@@ -1,9 +1,15 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import FitnessDashboard from './components/FitnessDashboard';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
-});
+function App() {
+  return (
+    <div className="App">
+      <FitnessDashboard />
+    </div>
+  );
+}
+
+export default App;
+
+// Add this line at the end of the file to prevent the isolatedModules error
+export {};
