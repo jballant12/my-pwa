@@ -4,10 +4,15 @@ const cors = require('cors');
 const OpenAI = require('openai');
 const admin = require("firebase-admin");
 
-// Initialize Firebase Admin without service account for now
-// You'll need to add your service account credentials later
+// Initialize Firebase Admin using the same config as the client
 admin.initializeApp({
-  projectId: 'your-project-id' // Replace with your Firebase project ID
+  apiKey: "AIzaSyDtxrx-KGT5jWNVLDagdcaMEY_Pp04qWiM",
+  authDomain: "trubro-pt.firebaseapp.com",
+  projectId: "trubro-pt",
+  storageBucket: "trubro-pt.appspot.com",
+  messagingSenderId: "323952412810",
+  appId: "1:323952412810:web:1e055542363951bc26c573",
+  measurementId: "G-V0RR0L8PQZ"
 });
 
 const db = admin.firestore();
