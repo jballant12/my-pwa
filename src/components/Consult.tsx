@@ -58,6 +58,21 @@ export default function Consult() {
     });
 
     vapi.on("message", (message) => {
+      console.log("Received message:", message);
+      
+      if (message.type === "function-call" && message.functionCall?.name === "SaveTrainingType") {
+        const trainingData = {
+          goals: message.functionCall.parameters.goals,
+          vision: message.functionCall.parameters.vision,
+          split_length: message.functionCall.parameters.split_length,
+          weekly_training_split: message.functionCall.parameters.weekly_training_split,
+          timestamp: new Date()
+        };
+        console.log("Training data received:", trainingData);
+        setTrainingPlan(trainingData);
+        saveTrainingPlanToFirebase(trainingData);
+      }
+      
       if (message.type === "conversation-update") {
         setChatHistory((prevHistory) => [
           ...prevHistory,
@@ -66,32 +81,27 @@ export default function Consult() {
             content: m.content,
           })),
         ]);
-      } else if (message.type === "add-message" && message.message.role === "assistant") {
-        try {
-          const data = JSON.parse(message.message.content);
-          if (data.goals && data.vision && data.split_length && data.weekly_training_split) {
-            saveTrainingPlanToFirebase(data);
-          }
-        } catch (e) {
-          console.error("Error parsing training plan message:", e);
-        }
       }
     });
 
     const saveTrainingPlanToFirebase = async (trainingData: any) => {
-      if (!auth.currentUser) return;
+      if (!auth.currentUser) {
+        console.error("No authenticated user found");
+        return;
+      }
 
       try {
         const trainingPlanRef = doc(collection(db, 'Users', auth.currentUser.uid, 'training_plan'));
-        await setDoc(trainingPlanRef, {
+        const dataToSave = {
           ...trainingData,
-          createdAt: new Date(),
-          trainerId: selectedTrainer
-        });
-        setTrainingPlan(trainingData); //added this line to update the state.
-        console.log("Training plan saved successfully");
+          trainerId: selectedTrainer,
+          createdAt: new Date()
+        };
+        
+        await setDoc(trainingPlanRef, dataToSave);
+        console.log("Training plan saved successfully to Firebase");
       } catch (error) {
-        console.error("Error saving training plan:", error);
+        console.error("Error saving training plan to Firebase:", error);
       }
     };
 
