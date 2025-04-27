@@ -21,18 +21,26 @@ export const TrainerProvider: React.FC<{ children: React.ReactNode }> = ({ child
   useEffect(() => {
     const user = auth.currentUser;
     if (user) {
-      const unsubscribe = onSnapshot(collection(db, 'Users', user.uid, 'trainers'), (snapshot) => {
+      console.log("Setting up trainer listener for user:", user.uid);
+      const trainersRef = collection(db, 'Users', user.uid, 'trainers');
+      const unsubscribe = onSnapshot(trainersRef, (snapshot) => {
         const trainersList = snapshot.docs.map(doc => ({
           id: doc.id,
           name: doc.data().name,
+          coachingStyle: doc.data().coachingStyle,
+          personality: doc.data().personality,
+          trainervoice: doc.data().trainervoice,
         }));
+        console.log("Fetched trainers:", trainersList);
         setTrainers(trainersList);
       });
 
       // Cleanup the listener on unmount
       return () => unsubscribe();
+    } else {
+      setTrainers([]); // Reset trainers when no user is logged in
     }
-  }, []);
+  }, [auth.currentUser]); // Re-run when user changes
 
   // Add a new trainer
   const addTrainer = async (trainer: Trainer) => {
