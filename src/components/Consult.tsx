@@ -5,7 +5,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import { auth, db } from '../firebase';  // Import Firestore database
 import { doc, collection, getDocs, getDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
-import { useVapi } from '@vapi-ai/react';
 import { query, where } from 'firebase/firestore';
 import { TrainerContext } from '../context/TrainerContext';
 import { UserContext } from '../context/UserContext';
@@ -158,9 +157,9 @@ useEffect(() => {
           </SelectTrigger>
           <SelectContent>
             {trainers && trainers.length > 0 ? (
-              trainers.map((trainer) => (
-                <SelectItem key={trainer.id} value={trainer.id || 'default'}>
-                  {trainer.name || 'Unnamed Trainer'}
+              trainers.filter(trainer => trainer.name && trainer.id).map((trainer) => (
+                <SelectItem key={trainer.id} value={trainer.id}>
+                  {trainer.name}
                 </SelectItem>
               ))
             ) : (
