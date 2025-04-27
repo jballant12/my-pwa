@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
+import Navigation from './Navigation';
 import { Button } from './ui/button';
 import { Card, CardContent } from './ui/card';
 import { Activity, ClipboardList, Target, BarChart, BookOpen, TrendingUp, ChevronRight, Camera } from 'lucide-react';
@@ -35,7 +36,8 @@ const FitnessDashboard: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black text-white p-4">
-      <Card className="w-full max-w-7xl mx-auto bg-white/10 backdrop-blur-sm border-0 shadow-2xl">
+      <Navigation />
+      <Card className="w-full max-w-7xl mx-auto bg-white/10 backdrop-blur-sm border-0 shadow-2xl md:ml-20">
         <CardContent className="p-6">
           <div className="flex justify-between items-center mb-6">
             <div className="text-2xl font-mono bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-violet-500">
