@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Button } from "./ui/button";
-
 import Navigation from './Navigation';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
-import { auth, db } from '../firebase';  // Import Firestore database
-import { doc, collection, getDocs, getDoc } from 'firebase/firestore';
+import { auth, db } from '../firebase';
+import { doc, collection, getDocs, getDoc, query, where } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import Vapi from '@vapi-ai/web';
-import { query, where } from 'firebase/firestore';
 import { TrainerContext } from '../context/TrainerContext';
 import { UserContext } from '../context/UserContext';
 
