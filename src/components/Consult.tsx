@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Button } from "./ui/button";
+import { VapiCallButton, VapiTranscript } from '@vapi-ai/react';
 
 import Navigation from './Navigation';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
@@ -175,21 +175,30 @@ useEffect(() => {
 
       </div>
       
-      <div className="flex justify-center my-4">
-        <Button 
-          onClick={handleStartConsult}
-          className="bg-gradient-to-r from-blue-400 to-violet-500 hover:from-blue-500 hover:to-violet-600"
-        >
-          Start Call
-        </Button>
-      </div>
-
-      <div id="chat" className="mt-6 p-4 bg-white/10 backdrop-blur-sm shadow-lg rounded-lg overflow-auto max-h-[60vh] md:max-h-80 w-full max-w-2xl mx-auto">
-        {chatHistory.map((msg, index) => (
-          <div key={index} className={msg.role === "assistant" ? "text-blue-600" : "text-black"}>
-            {msg.content}
-          </div>
-        ))}
+      <div className="flex flex-col items-center space-y-4 my-4">
+        <div className="w-64">
+          <VapiCallButton
+            assistantId="9c3fc777-e009-4916-80db-6bb8f5fec2e2"
+            vapiInstance={vapiInstance}
+            variables={{
+              user_name: userSettings?.username,
+              user_height: userSettings?.height,
+              user_weight: userSettings?.weight,
+              user_training_level: userSettings?.gymExpertise,
+              trainer_name: trainerData?.name,
+              trainer_personality: trainerData?.personality,
+              trainer_coaching_style: trainerData?.coachingStyle,
+              voiceId: trainerData?.trainervoice
+            }}
+          />
+        </div>
+        
+        <div className="w-full max-w-2xl bg-white/10 backdrop-blur-sm rounded-lg p-4">
+          <VapiTranscript 
+            vapiInstance={vapiInstance}
+            className="text-lg text-white"
+          />
+        </div>
       </div>
     </div>
   );
