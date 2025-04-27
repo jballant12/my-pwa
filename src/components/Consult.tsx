@@ -41,7 +41,8 @@ export default function Consult() {
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
   const [vapiInstance, setVapiInstance] = useState<any>(null);
   const [isCallActive, setIsCallActive] = useState(false);
-  const [transcript, setTranscript] = useState<string>("");
+  const [partialTranscript, setPartialTranscript] = useState<string>("");
+  const [finalTranscripts, setFinalTranscripts] = useState<string[]>([]);
 
   useEffect(() => {
     const vapi = new Vapi("ee125a2c-2039-4a9e-8384-806f6abc1824");
@@ -49,9 +50,10 @@ export default function Consult() {
 
     vapi.on("transcript", (message) => {
       if (message.type === "partial") {
-        setTranscript(message.transcript);
+        setPartialTranscript(message.transcript);
       } else if (message.type === "final") {
-        setTranscript(prev => prev + "\n" + message.transcript);
+        setFinalTranscripts(prev => [...prev, message.transcript]);
+        setPartialTranscript("");
       }
     });
 
@@ -168,7 +170,14 @@ export default function Consult() {
 
         <div className="mt-4 p-4 bg-white/10 backdrop-blur-sm rounded-lg">
           <h2 className="text-xl font-semibold mb-2">Live Transcript</h2>
-          <p className="text-white/90 whitespace-pre-wrap">{transcript}</p>
+          <div className="text-white/90">
+            {finalTranscripts.map((text, i) => (
+              <p key={i} className="mb-2">{text}</p>
+            ))}
+            {partialTranscript && (
+              <p className="text-gray-400">{partialTranscript}</p>
+            )}
+          </div>
         </div>
 
         <div id="chat" className="mt-6 p-4 bg-white/10 backdrop-blur-sm shadow-lg rounded-lg overflow-auto max-h-[60vh] md:max-h-80 w-full max-w-2xl mx-auto">
