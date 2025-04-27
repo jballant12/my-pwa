@@ -18,7 +18,10 @@ admin.initializeApp({
 const db = admin.firestore();
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: ['http://localhost:3000', 'http://localhost:5000', 'https://trubro-pt.web.app'],
+  credentials: true
+}));
 app.use(express.json());
 
 // Initialize OpenAI once
