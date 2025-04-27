@@ -1,15 +1,22 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Vapi from '@vapi-ai/web';
 
-const useVapi = () => {
-  const [volumeLevel, setVolumeLevel] = useState(0);
-  const [isSessionActive, setIsSessionActive] = useState(false);
+export function useVapi(apiKey: string) {
+  const [vapi, setVapi] = useState<Vapi | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
 
-  const toggleCall = () => {
-    setIsSessionActive(!isSessionActive);
-  };
+  useEffect(() => {
+    try {
+      const vapiInstance = new Vapi(apiKey);
+      setVapi(vapiInstance);
+      setIsLoading(false);
+    } catch (err) {
+      setError(err as Error);
+      setIsLoading(false);
+    }
+  }, [apiKey]);
 
-  return { volumeLevel, isSessionActive, toggleCall };
-};
-
-export default useVapi;
+  return { vapi, isLoading, error };
+}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Button } from "./ui/button";
-import ParentComponent from './examples/parent-component.tsx';
+
 import Navigation from './Navigation';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { auth, db } from '../firebase';  // Import Firestore database
@@ -171,9 +171,7 @@ useEffect(() => {
         </Select>
       </div>
 
-      <div className="w-full max-w-2xl mx-auto" style={{ height: '400px' }}>
-        {ParentComponent ? <ParentComponent /> : <div>Loading...</div>}
-      </div>
+      
 
       </div>
       <div id="chat" className="mt-6 p-4 bg-white/10 backdrop-blur-sm shadow-lg rounded-lg overflow-auto max-h-[60vh] md:max-h-80 w-full max-w-2xl mx-auto">
