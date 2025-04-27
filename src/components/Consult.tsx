@@ -174,6 +174,16 @@ useEffect(() => {
       
 
       </div>
+      
+      <div className="flex justify-center my-4">
+        <Button 
+          onClick={handleStartConsult}
+          className="bg-gradient-to-r from-blue-400 to-violet-500 hover:from-blue-500 hover:to-violet-600"
+        >
+          Start Call
+        </Button>
+      </div>
+
       <div id="chat" className="mt-6 p-4 bg-white/10 backdrop-blur-sm shadow-lg rounded-lg overflow-auto max-h-[60vh] md:max-h-80 w-full max-w-2xl mx-auto">
         {chatHistory.map((msg, index) => (
           <div key={index} className={msg.role === "assistant" ? "text-blue-600" : "text-black"}>
