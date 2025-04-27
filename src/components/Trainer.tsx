@@ -119,15 +119,8 @@ export default function Trainer() {
           name: trainerName,
           personality,
           coachingStyle: trainerCoachingStyle,
-          trainervoice: trainerVoice, // Fix property name to match what Consult expects
+          trainervoice: trainerVoice,
           knowledgeBases,
-        };
-
-        const newTrainer = {
-          name: trainerName,
-          personality: personality,
-          coachingStyle: trainerCoachingStyle,
-          trainervoice: trainerVoice
         };
         const docRef = await addDoc(collection(db, 'Users', user.uid, 'trainers'), newTrainer);
         const newTrainerData = { 
