@@ -14,10 +14,11 @@ import { UserContext } from '../context/UserContext';
 // Define types
 interface Trainer {
   id: string;
-  name: string;
-  coachingStyle: string;
-  personality: string;
-  trainervoice: string;
+  firstName?: string;
+  name?: string;
+  coachingStyle?: string;
+  personality?: string;
+  trainervoice?: string;
 }
 
 interface ChatMessage {
@@ -30,14 +31,14 @@ export default function Consult() {
   if (!context) {
       throw new Error("TrainerContext must be used within a TrainerProvider");
   }
-  const { trainers, addTrainer } = context; // Now TypeScript knows context is defined
+  const { trainers } = context;
   const userContext = useContext(UserContext);
   if (!userContext) {
     throw new Error("UserContext must be used within a UserProvider");
-}
-const { userSettings } = userContext; 
-  const [selectedTrainer, setSelectedTrainer] = useState<string>(""); // Selected trainer ID
-  const [trainerData, setTrainerData] = useState<Trainer | null>(null); // Trainer data
+  }
+  const { userSettings } = userContext;
+  const [selectedTrainer, setSelectedTrainer] = useState<string>(""); 
+  const [trainerData, setTrainerData] = useState<Trainer | null>(null);
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]); // Chat history
   const [vapiInstance, setVapiInstance] = useState<Vapi | null>(null); // Vapi instance
   const [voiceID, setVoiceID] = useState<string | null>(null); 
@@ -78,7 +79,7 @@ useEffect(() => {
             try {
               const voicesQuery = query(collection(db, "Voices"), where("name", "==", trainer.trainervoice));
               const voicesSnapshot = await getDocs(voicesQuery);
-              
+
               if (!voicesSnapshot.empty) { // Corrected: removed parentheses
                 const voiceDoc = voicesSnapshot.docs[0];
                 const voiceData = voiceDoc.data();
@@ -102,36 +103,10 @@ useEffect(() => {
   fetchTrainerData();
 }, [selectedTrainer]);
 
- // Fetch trainer data and default select trainer
- useEffect(() => {
-    const fetchTrainerData = async () => {
-      console.log("Fetching trainer data for:", selectedTrainer);
-      if (selectedTrainer) {
-        const trainerDoc = await getDoc(doc(db, "Users", auth.currentUser?.uid || "", "trainers", selectedTrainer));
-        const trainer = trainerDoc.data() as Trainer;
-        setTrainerData(trainer);
-        console.log("Trainer data fetched:", trainer);
-
-        // Fetch corresponding voice ID using trainer's voice name
-        if (trainer && trainer.trainervoice) {
-          try {
-            const voicesQuery = query(collection(db, "Voices"), where("name", "==", trainer.trainervoice));
-            const voicesSnapshot = await getDocs(voicesQuery);
-            
-            if (!voicesSnapshot.empty) {
-              const voiceDoc = voicesSnapshot.docs[0];
-              const voiceData = voiceDoc.data();
-              setVoiceID(voiceData.id); // Set voice ID to state
-              console.log("Voice ID set:", voiceData.id); // Log voice ID
-            }
-          } catch (error) {
-            console.error("Error fetching voice ID: ", error);
-          }
-        }
-      }
-    };
-    fetchTrainerData();
-  }, [selectedTrainer]);
+  // Debug logging
+  useEffect(() => {
+    console.log("Available trainers:", trainers);
+  }, [trainers]);
 
 
   // Handle Vapi start call
@@ -160,7 +135,7 @@ useEffect(() => {
       <Navigation />
       <div className="md:ml-20">
         <h1 className="text-3xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-violet-500 mb-6">Consult</h1>
-      
+
       <div className="mb-4 w-full max-w-md mx-auto">
         <Select 
           value={selectedTrainer || ""}
@@ -175,7 +150,7 @@ useEffect(() => {
             {trainers && trainers.length > 0 ? (
               trainers.map((trainer) => (
                 <SelectItem key={trainer.id} value={trainer.id}>
-                  {trainer.name}
+                  {trainer.firstName || trainer.name || "Unnamed Trainer"} {/* Display firstName or name, or "Unnamed Trainer" if both are missing */}
                 </SelectItem>
               ))
             ) : (

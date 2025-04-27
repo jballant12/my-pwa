@@ -33,12 +33,13 @@ export const TrainerProvider: React.FC<{ children: React.ReactNode }> = ({ child
             const data = doc.data();
             return {
               id: doc.id,
-              name: data.firstName || data.name || 'Unnamed Trainer', // Try firstName first
+              firstName: data.firstName || '',
+              name: data.name || '',
               coachingStyle: data.coachingStyle || '',
               personality: data.personality || '',
               trainervoice: data.trainervoice || '',
             };
-          });
+          }).filter(trainer => trainer.firstName || trainer.name); // Filter out trainers without names
           
           console.log("Fetched trainers:", trainersList);
           setTrainers(trainersList);
