@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { VapiCallButton, VapiTranscript, VapiProvider } from '@vapi-ai/react';
+import Vapi from '@vapi-ai/web';
 
 import Navigation from './Navigation';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
@@ -142,7 +142,6 @@ useEffect(() => {
   };
 
   return (
-    <VapiProvider apiKey="ee125a2c-2039-4a9e-8384-806f6abc1824">
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black text-white p-4">
       <Navigation />
       <div className="md:ml-20">
@@ -178,30 +177,24 @@ useEffect(() => {
       
       <div className="flex flex-col items-center space-y-4 my-4">
         <div className="w-64">
-          <VapiCallButton
-            assistantId="9c3fc777-e009-4916-80db-6bb8f5fec2e2"
-            vapiInstance={vapiInstance}
-            variables={{
-              user_name: userSettings?.username,
-              user_height: userSettings?.height,
-              user_weight: userSettings?.weight,
-              user_training_level: userSettings?.gymExpertise,
-              trainer_name: trainerData?.name,
-              trainer_personality: trainerData?.personality,
-              trainer_coaching_style: trainerData?.coachingStyle,
-              voiceId: trainerData?.trainervoice
-            }}
-          />
+          <button
+            onClick={handleStartConsult}
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >
+            {vapiInstance?.started ? 'End Call' : 'Start Call'}
+          </button>
         </div>
         
         <div className="w-full max-w-2xl bg-white/10 backdrop-blur-sm rounded-lg p-4">
-          <VapiTranscript 
-            vapiInstance={vapiInstance}
-            className="text-lg text-white"
-          />
+          <div className="text-lg text-white">
+            {chatHistory.map((msg, idx) => (
+              <div key={idx} className="mb-2">
+                <strong>{msg.role}:</strong> {msg.content}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
-    </VapiProvider>
   );
 }
