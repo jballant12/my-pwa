@@ -3,16 +3,17 @@ const cors = require('cors');
 const OpenAI = require('openai');
 const admin = require("firebase-admin"); 
 
-const serviceAccount = require("./path/to/your/serviceAccountKey.json"); 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "YOUR_DATABASE_URL" 
-});
+// Initialize Firebase Admin without service account for now
+admin.initializeApp();
 const db = admin.firestore();
 
-
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: true,
+  credentials: true,
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type']
+}));
 app.use(express.json());
 
 const openai = new OpenAI({
@@ -101,8 +102,7 @@ app.post('/analyze-image', async (req, res) => {
 });
 
 
-const PORT = process.env.PORT || 3001;
-const HOST = '0.0.0.0';
-app.listen(PORT, HOST, () => {
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on port ${PORT}`);
 });
