@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import Vapi from '@vapi-ai/web';
+import { Button } from "./ui/button";
 
 import Navigation from './Navigation';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
@@ -159,9 +159,9 @@ useEffect(() => {
           </SelectTrigger>
           <SelectContent>
             {trainers && trainers.length > 0 ? (
-              trainers.filter(trainer => trainer.name).map((trainer) => (
-                <SelectItem key={trainer.id} value={trainer.id}>
-                  {trainer.name}
+              trainers.map((trainer) => (
+                <SelectItem key={trainer.id} value={trainer.id || 'default'}>
+                  {trainer.name || 'Unnamed Trainer'}
                 </SelectItem>
               ))
             ) : (
@@ -174,26 +174,12 @@ useEffect(() => {
       
 
       </div>
-      
-      <div className="flex flex-col items-center space-y-4 my-4">
-        <div className="w-64">
-          <button
-            onClick={handleStartConsult}
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-          >
-            {vapiInstance?.started ? 'End Call' : 'Start Call'}
-          </button>
-        </div>
-        
-        <div className="w-full max-w-2xl bg-white/10 backdrop-blur-sm rounded-lg p-4">
-          <div className="text-lg text-white">
-            {chatHistory.map((msg, idx) => (
-              <div key={idx} className="mb-2">
-                <strong>{msg.role}:</strong> {msg.content}
-              </div>
-            ))}
+      <div id="chat" className="mt-6 p-4 bg-white/10 backdrop-blur-sm shadow-lg rounded-lg overflow-auto max-h-[60vh] md:max-h-80 w-full max-w-2xl mx-auto">
+        {chatHistory.map((msg, index) => (
+          <div key={index} className={msg.role === "assistant" ? "text-blue-600" : "text-black"}>
+            {msg.content}
           </div>
-        </div>
+        ))}
       </div>
     </div>
   );
