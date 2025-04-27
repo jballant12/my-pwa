@@ -27,18 +27,17 @@ export default function HomeScreen() {
           {menuItems.map(({ path, label, icon: Icon, color }) => (
             <Card 
               key={path}
-              className="group hover:scale-105 transition-all duration-300 bg-gradient-to-br shadow-xl border-0 backdrop-blur-sm bg-opacity-30 bg-white/10"
+              className="group hover:scale-105 transition-all duration-300 shadow-xl border-0"
             >
               <CardContent 
-                className={`p-6 cursor-pointer bg-gradient-to-br ${color} opacity-0 group-hover:opacity-100 absolute inset-0 transition-opacity duration-300`}
+                className={`p-6 cursor-pointer bg-gradient-to-br ${color} transition-all duration-300`}
                 onClick={() => navigate(path)}
               >
                 <div className="flex flex-col items-center justify-center h-full space-y-4">
-                  <Icon className="w-12 h-12" />
+                  <Icon className="w-12 h-12 text-white" />
                   <h2 className="text-2xl font-semibold text-white">{label}</h2>
                 </div>
               </CardContent>
-              <CardContent className="p-6 group-hover:invisible">
                 <div className="flex flex-col items-center justify-center h-full space-y-4">
                   <Icon className="w-12 h-12" />
                   <h2 className="text-2xl font-semibold">{label}</h2>
