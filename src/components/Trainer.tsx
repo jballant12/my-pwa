@@ -114,22 +114,23 @@ export default function Trainer() {
 
     if (user) {
       try {
-        // Add a new document in "trainers" sub-collection for the user
         const newTrainer = {
           name: trainerName,
-          personality,
+          personality: personality,
           coachingStyle: trainerCoachingStyle,
           trainervoice: trainerVoice,
-          knowledgeBases,
+          knowledgeBases
         };
+        
         const docRef = await addDoc(collection(db, 'Users', user.uid, 'trainers'), newTrainer);
-        const newTrainerData = { 
-          id: docRef.id, 
-          ...newTrainer 
+        console.log("Added trainer with ID:", docRef.id);
+        
+        // Update the trainers list with the new trainer
+        const newTrainerWithId = {
+          id: docRef.id,
+          ...newTrainer
         };
-
-        // Update the trainers list and set the current trainer to the newly added one
-        setTrainers([...trainers, newTrainerData]);
+        setTrainers(prevTrainers => [...prevTrainers, newTrainerWithId]);
         setCurrentTrainer(trainerName); // Set the current trainer to the newly added trainer
 
         console.log('Trainer added successfully!');
