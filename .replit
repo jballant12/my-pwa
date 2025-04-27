@@ -12,14 +12,6 @@ build = ["sh", "-c", "npm run build"]
 localPort = 3000
 externalPort = 80
 
-[[ports]]
-localPort = 3001
-externalPort = 3001
-
-[[ports]]
-localPort = 5000
-externalPort = 5000
-
 [workflows]
 runButton = "Dev"
 
@@ -34,4 +26,4 @@ args = "cd openai-server && node server.js"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "HTTPS=true npm start"
+args = "npm start"
