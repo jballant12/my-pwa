@@ -1,17 +1,16 @@
+
 import React, { useState, useEffect, useContext } from 'react';
 import { Button } from "./ui/button";
 import Navigation from './Navigation';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
-import { auth, db } from '../firebase';  // Import Firestore database
+import { auth, db } from '../firebase';
 import { doc, collection, getDocs, getDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { query, where } from 'firebase/firestore';
 import { TrainerContext } from '../context/TrainerContext';
 import { UserContext } from '../context/UserContext';
-import Vapi from '@vapi-ai/web';
+import { createVapi } from '@vapi-ai/web';
 
-
-// Define types
 interface Trainer {
   id: string;
   firstName?: string;
@@ -29,26 +28,32 @@ interface ChatMessage {
 export default function Consult() {
   const context = useContext(TrainerContext);
   if (!context) {
-      throw new Error("TrainerContext must be used within a TrainerProvider");
+    throw new Error("TrainerContext must be used within a TrainerProvider");
   }
   const { trainers } = context;
-  console.log("Trainers in Consult:", trainers);
   const userContext = useContext(UserContext);
   if (!userContext) {
     throw new Error("UserContext must be used within a UserProvider");
   }
   const { userSettings } = userContext;
-  const [selectedTrainer, setSelectedTrainer] = useState<string>(""); 
+  const [selectedTrainer, setSelectedTrainer] = useState<string>("");
   const [trainerData, setTrainerData] = useState<Trainer | null>(null);
-  const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]); // Chat history
-  const [vapiInstance, setVapiInstance] = useState<Vapi | null>(null); // Vapi instance
-  const [voiceID, setVoiceID] = useState<string | null>(null); 
+  const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
+  const [vapiInstance, setVapiInstance] = useState<any>(null);
+  const [isCallActive, setIsCallActive] = useState(false);
+  const [transcript, setTranscript] = useState<string>("");
 
-   // Initialize Vapi
-   useEffect(() => {
-    const vapi = new Vapi("ee125a2c-2039-4a9e-8384-806f6abc1824");
+  useEffect(() => {
+    const vapi = createVapi("ee125a2c-2039-4a9e-8384-806f6abc1824");
     setVapiInstance(vapi);
-    console.log("Vapi instance initialized:", vapi); // Log Vapi instance
+
+    vapi.on("transcript", (message) => {
+      if (message.type === "partial") {
+        setTranscript(message.transcript);
+      } else if (message.type === "final") {
+        setTranscript(prev => prev + "\n" + message.transcript);
+      }
+    });
 
     vapi.on("message", (message) => {
       if (message.type === "conversation-update") {
@@ -61,83 +66,70 @@ export default function Consult() {
         ]);
       }
     });
+
+    return () => {
+      if (vapi) {
+        vapi.stop();
+      }
+    };
   }, []);
 
-// Fetch trainer data when a trainer is selected
-useEffect(() => {
-  const fetchTrainerData = async () => {
-    console.log("Fetching trainer data for:", selectedTrainer); // Log selected trainer
-    if (selectedTrainer) {
-      try {
-        const trainerDoc = await getDoc(doc(db, "Users", auth.currentUser?.uid || "", "trainers", selectedTrainer));
-        if (trainerDoc.exists()) {
-          const trainer = trainerDoc.data() as Trainer;
-          setTrainerData(trainer);
-          console.log("Trainer data fetched:", trainer); // Log fetched trainer data
+  useEffect(() => {
+    const fetchTrainerData = async () => {
+      if (selectedTrainer) {
+        try {
+          const trainerDoc = await getDoc(doc(db, "Users", auth.currentUser?.uid || "", "trainers", selectedTrainer));
+          if (trainerDoc.exists()) {
+            const trainer = trainerDoc.data() as Trainer;
+            setTrainerData(trainer);
 
-           // Fetch corresponding voice ID using trainer's voice name
-           if (trainer.trainervoice) {
-            try {
-              const voicesQuery = query(collection(db, "Voices"), where("name", "==", trainer.trainervoice));
-              const voicesSnapshot = await getDocs(voicesQuery);
-
-              if (!voicesSnapshot.empty) { // Corrected: removed parentheses
-                const voiceDoc = voicesSnapshot.docs[0];
-                const voiceData = voiceDoc.data();
-                setVoiceID(voiceData.id);
-                console.log("Voice ID set:", voiceData.id);
-              } else {
-                console.warn("No voice found for the given name.");
+            if (trainer.trainervoice) {
+              try {
+                const voicesQuery = query(collection(db, "Voices"), where("name", "==", trainer.trainervoice));
+                const voicesSnapshot = await getDocs(voicesQuery);
+                if (!voicesSnapshot.empty) {
+                  const voiceDoc = voicesSnapshot.docs[0];
+                  const voiceData = voiceDoc.data();
+                  console.log("Voice ID set:", voiceData.id);
+                }
+              } catch (error) {
+                console.error("Error fetching voice ID: ", error);
               }
-            } catch (error) {
-              console.error("Error fetching voice ID: ", error);
             }
           }
-        } else {
-          console.warn("No trainer found with the selected ID.");
+        } catch (error) {
+          console.error("Error fetching trainer data: ", error);
         }
-      } catch (error) {
-        console.error("Error fetching trainer data: ", error);
       }
-    }
-  };
-  fetchTrainerData();
-}, [selectedTrainer]);
-
-  // Debug logging
-  useEffect(() => {
-    console.log("Available trainers:", trainers);
-  }, [trainers]);
-
-
-  // Handle Vapi start call
-  const handleStartConsult = () => {
-    console.log("Vapi Instance:", vapiInstance);
-    console.log("User Settings:", userSettings);
-    console.log("Trainer Data:", trainerData);
-
-    if (!vapiInstance || !userSettings || !trainerData) {
-      console.error("Vapi instance or trainer data is missing.");
-      return;
-    }
-
-    const assistantOverrides = {
-      variableValues: {
-        // User details
-        user_name: userSettings.username,
-        user_height: userSettings.height,
-        user_weight: userSettings.weight,
-        user_training_level: userSettings.gymExpertise,
-        // Trainer details
-        trainer_name: trainerData.name,
-        trainer_personality: trainerData.personality,
-        trainer_coaching_style: trainerData.coachingStyle,
-        voiceId: trainerData.trainervoice // Use trainer's voice ID
-      },
     };
+    fetchTrainerData();
+  }, [selectedTrainer]);
 
-    console.log("Starting Vapi with variables:", assistantOverrides);
-    vapiInstance.start("9c3fc777-e009-4916-80db-6bb8f5fec2e2", assistantOverrides);
+  const handleToggleCall = () => {
+    if (!isCallActive) {
+      if (!vapiInstance || !userSettings || !trainerData) {
+        console.error("Vapi instance or trainer data is missing.");
+        return;
+      }
+
+      const assistantOverrides = {
+        variableValues: {
+          user_name: userSettings.username,
+          user_height: userSettings.height,
+          user_weight: userSettings.weight,
+          user_training_level: userSettings.gymExpertise,
+          trainer_name: trainerData.name,
+          trainer_personality: trainerData.personality,
+          trainer_coaching_style: trainerData.coachingStyle,
+          voiceId: trainerData.trainervoice
+        },
+      };
+
+      vapiInstance.start("9c3fc777-e009-4916-80db-6bb8f5fec2e2", assistantOverrides);
+    } else {
+      vapiInstance?.stop();
+    }
+    setIsCallActive(!isCallActive);
   };
 
   return (
@@ -146,41 +138,46 @@ useEffect(() => {
       <div className="md:ml-20">
         <h1 className="text-3xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-violet-500 mb-6">Consult</h1>
 
-      <div className="mb-4 w-full max-w-md mx-auto">
-        <Select 
-          value={selectedTrainer}
-          onValueChange={(value) => {
-            console.log("Trainer selected:", value);
-            setSelectedTrainer(value);
-          }}>
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="Select Trainer" />
-          </SelectTrigger>
-          <SelectContent>
-            {trainers && trainers.length > 0 ? (
-              trainers.filter(trainer => trainer.name && trainer.id).map((trainer) => (
-                <SelectItem key={trainer.id} value={trainer.id}>
-                  {trainer.name}
-                </SelectItem>
-              ))
-            ) : (
-              <SelectItem value="no-trainers">No trainers available</SelectItem>
-            )}
-          </SelectContent>
-        </Select>
-      </div>
+        <div className="mb-4 w-full max-w-md mx-auto">
+          <Select
+            value={selectedTrainer}
+            onValueChange={(value) => setSelectedTrainer(value)}>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select Trainer" />
+            </SelectTrigger>
+            <SelectContent>
+              {trainers && trainers.length > 0 ? (
+                trainers.filter(trainer => trainer.name && trainer.id).map((trainer) => (
+                  <SelectItem key={trainer.id} value={trainer.id}>
+                    {trainer.name}
+                  </SelectItem>
+                ))
+              ) : (
+                <SelectItem value="no-trainers">No trainers available</SelectItem>
+              )}
+            </SelectContent>
+          </Select>
+        </div>
 
-      <Button onClick={handleStartConsult} className="w-full bg-green-500 hover:bg-green-600">
-        Start Consult
-      </Button>
+        <Button 
+          onClick={handleToggleCall} 
+          className={`w-full ${isCallActive ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600'}`}
+        >
+          {isCallActive ? 'End Call' : 'Start Call'}
+        </Button>
 
-      </div>
-      <div id="chat" className="mt-6 p-4 bg-white/10 backdrop-blur-sm shadow-lg rounded-lg overflow-auto max-h-[60vh] md:max-h-80 w-full max-w-2xl mx-auto">
-        {chatHistory.map((msg, index) => (
-          <div key={index} className={msg.role === "assistant" ? "text-blue-600" : "text-black"}>
-            {msg.content}
-          </div>
-        ))}
+        <div className="mt-4 p-4 bg-white/10 backdrop-blur-sm rounded-lg">
+          <h2 className="text-xl font-semibold mb-2">Live Transcript</h2>
+          <p className="text-white/90 whitespace-pre-wrap">{transcript}</p>
+        </div>
+
+        <div id="chat" className="mt-6 p-4 bg-white/10 backdrop-blur-sm shadow-lg rounded-lg overflow-auto max-h-[60vh] md:max-h-80 w-full max-w-2xl mx-auto">
+          {chatHistory.map((msg, index) => (
+            <div key={index} className={`mb-2 p-2 rounded ${msg.role === "assistant" ? "bg-blue-500/20" : "bg-green-500/20"}`}>
+              <strong>{msg.role}: </strong>{msg.content}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
