@@ -22,8 +22,8 @@ export const TrainerProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   // Set up a real-time listener for trainers
   useEffect(() => {
-    const user = auth.currentUser;
-    if (user) {
+    const unsubscribeAuth = auth.onAuthStateChanged((user) => {
+      if (user) {
       console.log("Setting up trainer listener for user:", user.uid);
       const trainersRef = collection(db, 'Users', user.uid, 'trainers');
       
@@ -57,12 +57,16 @@ export const TrainerProvider: React.FC<{ children: React.ReactNode }> = ({ child
         setTrainers([]);
       });
 
-      return () => unsubscribe();
+      return () => {
+        unsubscribe();
+      };
     } else {
       console.log("No user logged in");
       setTrainers([]);
     }
-  }, [auth.currentUser?.uid]); // Only re-run when user ID changes
+    });
+    return () => unsubscribeAuth();
+  }, []); // Only re-run when user ID changes
 
   // Add a new trainer
   const addTrainer = async (trainer: Trainer) => {
