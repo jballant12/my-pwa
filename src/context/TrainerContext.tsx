@@ -31,11 +31,11 @@ export const TrainerProvider: React.FC<{ children: React.ReactNode }> = ({ child
         try {
           const trainersList = snapshot.docs.map(doc => {
             const data = doc.data();
-            if (!data || !data.name) {
-              console.warn("No valid data found for trainer document:", doc.id);
+            if (!data) {
+              console.warn("No data found for trainer document:", doc.id);
               return null;
             }
-            const trainerData: Trainer = {
+            const trainerData = {
               id: doc.id,
               name: data.name,
               coachingStyle: data.coachingStyle || '',
@@ -44,7 +44,7 @@ export const TrainerProvider: React.FC<{ children: React.ReactNode }> = ({ child
             };
             console.log("Fetched trainer:", trainerData);
             return trainerData;
-          }).filter((trainer): trainer is Trainer => trainer !== null);
+          }).filter(trainer => trainer !== null && trainer.name);
           
           console.log("Fetched trainers:", trainersList);
           setTrainers(trainersList);
