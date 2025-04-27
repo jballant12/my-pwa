@@ -4,12 +4,13 @@ import { Card, CardContent } from "./ui/card";
 import { Button } from "./ui/button";
 import Navigation from './Navigation';
 import { auth, db } from '../firebase';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, collection } from 'firebase/firestore';
 import { UserContext } from '../context/UserContext';
 
 const Workout: React.FC = () => {
   const [weeklyTrainingSplit, setWeeklyTrainingSplit] = useState<string>('');
   const [todaysWorkout, setTodaysWorkout] = useState<string>('');
+  const [goals, setGoals] = useState<string>('');
   const userContext = useContext(UserContext);
   const { userSettings } = userContext || {};
 
@@ -22,7 +23,9 @@ const Workout: React.FC = () => {
         const trainingPlanDoc = await getDoc(trainingPlanRef);
         
         if (trainingPlanDoc.exists()) {
-          setWeeklyTrainingSplit(trainingPlanDoc.data().weekly_training_split);
+          const data = trainingPlanDoc.data();
+          setWeeklyTrainingSplit(data.weekly_training_split);
+          setGoals(data.goals);
         }
       } catch (error) {
         console.error("Error fetching training plan:", error);
@@ -39,7 +42,7 @@ const Workout: React.FC = () => {
     const today = days[new Date().getDay()];
 
     try {
-      const response = await fetch('http://localhost:3001/generate-workout', {
+      const response = await fetch('http://0.0.0.0:3001/generate-workout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -47,6 +50,7 @@ const Workout: React.FC = () => {
         body: JSON.stringify({
           weeklyTrainingSplit,
           today,
+          goals,
           userDetails: {
             height: userSettings.height,
             weight: userSettings.weight,

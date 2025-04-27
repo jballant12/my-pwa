@@ -7,6 +7,37 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.post('/generate-workout', async (req, res) => {
+  try {
+    const { weeklyTrainingSplit, today, goals, userDetails } = req.body;
+
+    const prompt = `Generate a detailed workout plan for ${today} based on this weekly split: ${weeklyTrainingSplit}. 
+    User's goals: ${goals}
+    User details:
+    - Height: ${userDetails.height}
+    - Weight: ${userDetails.weight}
+    - Injuries: ${userDetails.injuries}
+    - Experience Level: ${userDetails.gymExpertise}
+    
+    Format the workout with exercises, sets, reps, and any special instructions. Take into account any injuries when selecting exercises.`;
+
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4",
+      messages: [{
+        role: "user",
+        content: prompt
+      }],
+      max_tokens: 1000,
+      temperature: 0.7,
+    });
+
+    res.json({ workout: completion.data.choices[0].message.content.trim() });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Failed to generate workout' });
+  }
+});
+
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
