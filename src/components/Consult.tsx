@@ -52,15 +52,22 @@ export default function Consult() {
     console.log("Vapi instance initialized:", vapi); // Log Vapi instance
 
     vapi.on("message", (message) => {
-      if (message.type === "conversation-update") {
+      if (message.type === "transcript" || message.type === "conversation-update") {
         setChatHistory((prevHistory) => [
           ...prevHistory,
-          ...message.conversation.map((m: any) => ({
-            role: m.role,
-            content: m.content,
-          })),
+          ...(message.type === "transcript" 
+            ? [{ role: "user", content: message.transcript }]
+            : message.conversation.map((m: any) => ({
+                role: m.role,
+                content: m.content,
+              }))
+          ),
         ]);
       }
+    });
+
+    vapi.on("error", (error) => {
+      console.error("Vapi error:", error);
     });
   }, []);
 
@@ -174,12 +181,54 @@ useEffect(() => {
       
 
       </div>
-      <div id="chat" className="mt-6 p-4 bg-white/10 backdrop-blur-sm shadow-lg rounded-lg overflow-auto max-h-[60vh] md:max-h-80 w-full max-w-2xl mx-auto">
-        {chatHistory.map((msg, index) => (
-          <div key={index} className={msg.role === "assistant" ? "text-blue-600" : "text-black"}>
-            {msg.content}
-          </div>
-        ))}
+      
+      {/* Vapi Call Button */}
+      <div className="flex justify-center my-4">
+        <button
+          onClick={() => {
+            if (!vapiInstance || !userSettings || !trainerData) {
+              console.error("Vapi instance or trainer data is missing.");
+              return;
+            }
+            
+            if (vapiInstance.started) {
+              vapiInstance.stop();
+            } else {
+              vapiInstance.start("9c3fc777-e009-4916-80db-6bb8f5fec2e2", {
+                variableValues: {
+                  user_name: userSettings.username,
+                  user_height: userSettings.height,
+                  user_weight: userSettings.weight,
+                  user_training_level: userSettings.gymExpertise,
+                  trainer_name: trainerData.name,
+                  trainer_personality: trainerData.personality,
+                  trainer_coaching_style: trainerData.coachingStyle
+                }
+              });
+            }
+          }}
+          className={`px-6 py-3 rounded-lg font-semibold transition-colors ${
+            vapiInstance?.started 
+              ? 'bg-red-500 hover:bg-red-600 text-white' 
+              : 'bg-blue-500 hover:bg-blue-600 text-white'
+          }`}
+        >
+          {vapiInstance?.started ? 'End Call' : 'Start Call'}
+        </button>
+      </div>
+
+      {/* Transcription Display */}
+      <div className="mt-6 p-4 bg-white/10 backdrop-blur-sm shadow-lg rounded-lg overflow-auto max-h-[60vh] md:max-h-80 w-full max-w-2xl mx-auto">
+        <div id="transcription" className="text-white">
+          {chatHistory.map((msg, index) => (
+            <div key={index} className={`mb-2 ${
+              msg.role === "assistant" ? "text-blue-400" : "text-green-400"
+            }`}>
+              <strong>{msg.role === "assistant" ? "AI: " : "You: "}</strong>
+              {msg.content}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
