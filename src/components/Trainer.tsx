@@ -178,15 +178,16 @@ export default function Trainer() {
                 {/* Trainer Voice */}
                 <div className="space-y-2">
                   <Label htmlFor="trainerVoice">Trainer Voice</Label>
-                  <Select value={trainerVoice} onValueChange={setTrainerVoice}>
+                  <Select value={trainerVoice || "default"} onValueChange={setTrainerVoice}>
                     <SelectTrigger id="trainerVoice">
                       <SelectValue placeholder="Select trainer voice" />
                     </SelectTrigger>
                     <SelectContent className="max-h-52 overflow-y-auto">
                         {voices.map((voice) => (
+                            voice.id ? 
                             <SelectItem key={voice.id} value={voice.id}>
-                            {voice.name}
-                            </SelectItem>
+                              {voice.name}
+                            </SelectItem> : null
                         ))}
                         </SelectContent>
                   </Select>
@@ -212,10 +213,10 @@ export default function Trainer() {
                       <SelectValue placeholder="Select coaching style" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="supportive">Supportive</SelectItem>
-                      <SelectItem value="informative">Informative</SelectItem>
-                      <SelectItem value="hard-nosed">Hard-Nosed</SelectItem>
-                      <SelectItem value="military">Military Style</SelectItem>
+                      <SelectItem value="supportive_style">Supportive</SelectItem>
+                      <SelectItem value="informative_style">Informative</SelectItem>
+                      <SelectItem value="hard_nosed_style">Hard-Nosed</SelectItem>
+                      <SelectItem value="military_style">Military Style</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
