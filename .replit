@@ -30,7 +30,11 @@ mode = "parallel"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cd openai-server && PORT=3001 node server.js"
+args = "pkill -f \"node server.js\" || true"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd openai-server && PORT=3001 node server.js & "
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
