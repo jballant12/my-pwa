@@ -31,15 +31,16 @@ export const TrainerProvider: React.FC<{ children: React.ReactNode }> = ({ child
         try {
           const trainersList = snapshot.docs.map(doc => {
             const data = doc.data();
-            return {
+            const trainerData = {
               id: doc.id,
-              firstName: data.firstName || '',
-              name: data.name || '',
+              name: data.name || data.firstName || 'Unnamed Trainer',
               coachingStyle: data.coachingStyle || '',
               personality: data.personality || '',
-              trainervoice: data.trainervoice || '',
+              trainervoice: data.trainervoice || ''
             };
-          }).filter(trainer => trainer.firstName || trainer.name); // Filter out trainers without names
+            console.log("Processed trainer:", trainerData);
+            return trainerData;
+          });
           
           console.log("Fetched trainers:", trainersList);
           setTrainers(trainersList);

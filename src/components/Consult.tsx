@@ -138,7 +138,7 @@ useEffect(() => {
 
       <div className="mb-4 w-full max-w-md mx-auto">
         <Select 
-          value={selectedTrainer || ""}
+          value={selectedTrainer}
           onValueChange={(value) => {
             console.log("Trainer selected:", value);
             setSelectedTrainer(value);
@@ -147,15 +147,11 @@ useEffect(() => {
             <SelectValue placeholder="Select Trainer" />
           </SelectTrigger>
           <SelectContent>
-            {trainers && trainers.length > 0 ? (
-              trainers.map((trainer) => (
-                <SelectItem key={trainer.id} value={trainer.id}>
-                  {trainer.firstName || trainer.name || "Unnamed Trainer"} {/* Display firstName or name, or "Unnamed Trainer" if both are missing */}
-                </SelectItem>
-              ))
-            ) : (
-              <SelectItem value="no-trainers">No trainers available</SelectItem>
-            )}
+            {trainers && trainers.map((trainer) => (
+              <SelectItem key={trainer.id} value={trainer.id}>
+                {trainer.name}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
       </div>
