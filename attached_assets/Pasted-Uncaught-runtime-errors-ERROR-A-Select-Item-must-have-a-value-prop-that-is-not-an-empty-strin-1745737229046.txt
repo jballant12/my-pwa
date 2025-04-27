@@ -1,0 +1,48 @@
+Uncaught runtime errors:
+×
+ERROR
+A <Select.Item /> must have a value prop that is not an empty string. This is because the Select value can be set to an empty string to clear the selection and show the placeholder.
+SelectItem@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:118740:20
+renderWithHooks@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:77796:31
+updateForwardRef@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:81045:39
+callCallback@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:68052:23
+dispatchEvent@[native code]
+invokeGuardedCallbackDev@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:68096:33
+invokeGuardedCallback@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:68153:40
+beginWork$1@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:88051:32
+performUnitOfWork@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:87299:27
+workLoopSync@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:87222:26
+renderRootSync@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:87195:23
+performConcurrentWorkOnRoot@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:86590:92
+workLoop@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:99729:46
+flushWork@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:99707:26
+performWorkUntilDeadline@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:99944:46
+ERROR
+A <Select.Item /> must have a value prop that is not an empty string. This is because the Select value can be set to an empty string to clear the selection and show the placeholder.
+SelectItem@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:118740:20
+renderWithHooks@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:77796:31
+updateForwardRef@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:81045:39
+callCallback@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:68052:23
+dispatchEvent@[native code]
+invokeGuardedCallbackDev@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:68096:33
+invokeGuardedCallback@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:68153:40
+beginWork$1@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:88051:32
+performUnitOfWork@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:87299:27
+workLoopSync@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:87222:26
+renderRootSync@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:87195:23
+recoverFromConcurrentError@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:86687:38
+performConcurrentWorkOnRoot@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:86600:52
+workLoop@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:99729:46
+flushWork@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:99707:26
+performWorkUntilDeadline@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:99944:46
+ERROR
+A <Select.Item /> must have a value prop that is not an empty string. This is because the Select value can be set to an empty string to clear the selection and show the placeholder.
+SelectItem@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:118740:20
+renderWithHooks@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:77796:31
+updateForwardRef@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:81045:39
+beginWork$1@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:88029:27
+performUnitOfWork@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:87299:27
+workLoopSync@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:87222:26
+renderRootSync@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:87195:23
+recoverFromConcurrentError@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:86687:38
+performConcurrentWorkOnRoot@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-0
