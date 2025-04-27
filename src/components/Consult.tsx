@@ -173,12 +173,10 @@ useEffect(() => {
           </SelectTrigger>
           <SelectContent>
             {trainers.map((trainer) => (
-              trainer.name && (
-                <SelectItem key={trainer.id} value={trainer.id}>
-                  {trainer.name}
-                </SelectItem>
-              )
-            ))}
+            <SelectItem key={trainer.id} value={trainer.id || 'default'}>
+              {trainer.name || 'Unnamed Trainer'}
+            </SelectItem>
+          ))}
           </SelectContent>
         </Select>
       </div>

@@ -5,6 +5,9 @@ import { collection, addDoc, onSnapshot } from 'firebase/firestore';
 interface Trainer {
   id: string;
   name: string;
+  coachingStyle?: string;
+  personality?: string;
+  trainervoice?: string;
 }
 
 interface TrainerContextType {
