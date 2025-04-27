@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useContext } from 'react';
 import { Card, CardContent } from "./ui/card";
 import { Button } from "./ui/button";
@@ -11,6 +10,7 @@ const Workout: React.FC = () => {
   const [weeklyTrainingSplit, setWeeklyTrainingSplit] = useState<string>('');
   const [todaysWorkout, setTodaysWorkout] = useState<string>('');
   const [goals, setGoals] = useState<string>('');
+  const [error, setError] = useState<string>('');
   const userContext = useContext(UserContext);
   const { userSettings } = userContext || {};
 
@@ -22,19 +22,19 @@ const Workout: React.FC = () => {
         console.log("Fetching training plan for user:", auth.currentUser.uid);
         const trainingPlanRef = collection(db, 'Users', auth.currentUser.uid, 'training_plan');
         const querySnapshot = await getDocs(trainingPlanRef);
-        
+
         console.log("Query snapshot:", querySnapshot.size, "documents");
-        
+
         if (!querySnapshot.empty) {
           const docs = querySnapshot.docs.map(doc => ({
             ...doc.data(),
             id: doc.id
           }));
           console.log("All training plans:", docs);
-          
+
           const latestPlan = docs[0];
           console.log("Using plan:", latestPlan);
-          
+
           setWeeklyTrainingSplit(latestPlan.weekly_training_split || '');
           setGoals(latestPlan.goals || '');
         } else {
@@ -78,6 +78,7 @@ const Workout: React.FC = () => {
       setTodaysWorkout(data.workout);
     } catch (error) {
       console.error("Error generating workout:", error);
+      setError("Error generating workout. Please try again later.");
     }
   };
 
@@ -89,22 +90,23 @@ const Workout: React.FC = () => {
         <div className="grid grid-cols-1 gap-6">
           <Card className="bg-white/10 backdrop-blur-md border-white/20">
             <CardContent className="p-6">
-              <h2 className="text-xl font-semibold mb-4">Weekly Training Split</h2>
-              <p className="mb-4 whitespace-pre-line">{weeklyTrainingSplit}</p>
+              <h2 className="text-xl font-semibold mb-4 text-white">Weekly Training Split</h2>
+              <p className="mb-4 whitespace-pre-line text-white">{weeklyTrainingSplit}</p>
               <Button 
                 onClick={generateWorkout}
                 className="w-full bg-blue-600 hover:bg-blue-700"
               >
                 Generate Today's Workout
               </Button>
+              {error && <p className="text-red-500 text-center mt-2">{error}</p>}
             </CardContent>
           </Card>
 
           {todaysWorkout && (
             <Card className="bg-white/10 backdrop-blur-md border-white/20">
               <CardContent className="p-6">
-                <h2 className="text-xl font-semibold mb-4">Today's Workout</h2>
-                <p className="whitespace-pre-line">{todaysWorkout}</p>
+                <h2 className="text-xl font-semibold mb-4 text-white">Today's Workout</h2>
+                <p className="whitespace-pre-line text-white">{todaysWorkout}</p>
               </CardContent>
             </Card>
           )}
