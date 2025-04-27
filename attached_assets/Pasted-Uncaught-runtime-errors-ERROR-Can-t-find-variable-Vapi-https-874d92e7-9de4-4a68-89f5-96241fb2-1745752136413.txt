@@ -1,0 +1,46 @@
+Uncaught runtime errors:
+×
+ERROR
+Can't find variable: Vapi
+@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:712:26
+commitHookEffectListMount@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:84422:36
+commitPassiveMountOnFiber@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:85915:42
+commitPassiveMountEffects_complete@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:85887:38
+commitPassiveMountEffects_begin@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:85877:45
+commitPassiveMountEffects@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:85867:38
+flushPassiveEffectsImpl@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:87750:32
+flushPassiveEffects@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:87703:41
+commitRootImpl@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:87662:28
+commitRoot@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:87445:23
+performSyncWorkOnRoot@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:86954:17
+flushSyncCallbacks@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:74929:34
+@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:86559:35
+ERROR
+Can't find variable: Vapi
+@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:712:26
+commitHookEffectListMount@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:84422:36
+invokePassiveEffectMountInDEV@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:86111:42
+invokeEffectsInDev@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:88008:29
+commitDoubleInvokeEffectsInDEV@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:87991:29
+flushPassiveEffectsImpl@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:87764:39
+flushPassiveEffects@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:87703:41
+commitRootImpl@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:87662:28
+commitRoot@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:87445:23
+performSyncWorkOnRoot@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:86954:17
+flushSyncCallbacks@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:74929:34
+@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:86559:35
+ERROR
+Can't find variable: Vapi
+@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:712:26
+commitHookEffectListMount@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:84422:36
+commitPassiveMountOnFiber@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:85915:42
+commitPassiveMountEffects_complete@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:85887:38
+commitPassiveMountEffects_begin@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:85877:45
+commitPassiveMountEffects@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:85867:38
+flushPassiveEffectsImpl@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:87750:32
+flushPassiveEffects@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:87703:41
+commitRootImpl@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:87662:28
+commitRoot@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:87445:23
+performSyncWorkOnRoot@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:86954:17
+flushSyncCallbacks@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:74929:34
+@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:
