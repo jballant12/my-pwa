@@ -19,10 +19,10 @@ const db = admin.firestore();
 const app = express();
 
 app.use(cors({
-  origin: ['https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev'],
+  origin: true,
   credentials: true,
-  methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type']
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json());
 

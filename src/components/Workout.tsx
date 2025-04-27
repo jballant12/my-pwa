@@ -59,9 +59,9 @@ const Workout: React.FC = () => {
         setError("Please complete your user settings first");
         return;
       }
-      
+
       console.log("Generating workout with data:", {weeklyTrainingSplit, today, userSettings});
-      const response = await fetch('/api/generate-workout', {
+      const response = await fetch('https://874d92e7-9de4-4a68-89f5-96241fb23c6a-5000.replit.dev/generate-workout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -87,7 +87,7 @@ const Workout: React.FC = () => {
       if (!data.workout) {
         throw new Error('No workout data received');
       }
-      
+
       setTodaysWorkout(data.workout);
       setError('');
     } catch (error) {
