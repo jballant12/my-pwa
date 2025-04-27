@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { VapiCallButton, VapiTranscript } from '@vapi-ai/react';
+import { VapiCallButton, VapiTranscript, VapiProvider } from '@vapi-ai/react';
 
 import Navigation from './Navigation';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
@@ -142,6 +142,7 @@ useEffect(() => {
   };
 
   return (
+    <VapiProvider apiKey="ee125a2c-2039-4a9e-8384-806f6abc1824">
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black text-white p-4">
       <Navigation />
       <div className="md:ml-20">
@@ -201,5 +202,6 @@ useEffect(() => {
         </div>
       </div>
     </div>
+    </VapiProvider>
   );
 }
