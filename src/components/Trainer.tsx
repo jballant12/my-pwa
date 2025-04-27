@@ -230,13 +230,13 @@ export default function Trainer() {
                 {/* Select Knowledge Base */}
                 <div className="space-y-2">
                   <Label htmlFor="knowledgeBase">Select Knowledge Base</Label>
-                  <Select>
+                  <Select value="default">
                     <SelectTrigger id="knowledgeBase">
                       <SelectValue placeholder="Select knowledge base" />
                     </SelectTrigger>
                     <SelectContent>
                       {knowledgeBases.map((base, index) => (
-                        <SelectItem key={index} value={base}>{base}</SelectItem>
+                        base ? <SelectItem key={index} value={base || `kb_${index}`}>{base}</SelectItem> : null
                       ))}
                     </SelectContent>
                   </Select>
