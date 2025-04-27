@@ -55,6 +55,11 @@ const Workout: React.FC = () => {
     const today = days[new Date().getDay()];
 
     try {
+      if (!userSettings) {
+        setError("Please complete your user settings first");
+        return;
+      }
+      
       console.log("Generating workout with data:", {weeklyTrainingSplit, today, userSettings});
       const response = await fetch('http://0.0.0.0:3001/generate-workout', {
         method: 'POST',
@@ -66,19 +71,28 @@ const Workout: React.FC = () => {
           today,
           goals,
           userDetails: {
-            height: userSettings.height,
-            weight: userSettings.weight,
-            injuries: userSettings.injuries,
-            gymExpertise: userSettings.gymExpertise,
+            height: userSettings.height || '',
+            weight: userSettings.weight || '',
+            injuries: userSettings.injuries || '',
+            gymExpertise: userSettings.gymExpertise || '',
           }
         }),
       });
 
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
       const data = await response.json();
+      if (!data.workout) {
+        throw new Error('No workout data received');
+      }
+      
       setTodaysWorkout(data.workout);
+      setError('');
     } catch (error) {
       console.error("Error generating workout:", error);
-      setError("Error generating workout. Please try again later.");
+      setError("Error generating workout. Please ensure the server is running and try again.");
     }
   };
 
