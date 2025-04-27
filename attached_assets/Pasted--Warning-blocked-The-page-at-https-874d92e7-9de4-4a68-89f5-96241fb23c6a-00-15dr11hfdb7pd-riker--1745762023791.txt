@@ -1,0 +1,42 @@
+[Warning] [blocked] The page at https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/workout requested insecure content from http://0.0.0.0:5000/generate-workout. This content was blocked and must be served over HTTPS. (bundle.js, line 3488)
+
+[Error] Not allowed to request resource
+	(anonymous function) (bundle.js:3488)
+	generateWorkout (bundle.js:3474)
+	callCallback (bundle.js:68310)
+	dispatchEvent
+	invokeGuardedCallbackDev (bundle.js:68354)
+	invokeGuardedCallback (bundle.js:68411)
+	invokeGuardedCallbackAndCatchFirstError (bundle.js:68425)
+	executeDispatch (bundle.js:72568)
+	processDispatchQueueItemsInOrder (bundle.js:72594)
+	processDispatchQueue (bundle.js:72605)
+	dispatchEventsForPlugins (bundle.js:72614)
+	batchedUpdates$1 (bundle.js:87192)
+	batchedUpdates (bundle.js:68158)
+	dispatchEventForPluginEventSystem (bundle.js:72773)
+	dispatchEventWithEnableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay (bundle.js:70280)
+	dispatchEvent (bundle.js:70274:89)
+	dispatchDiscreteEvent (bundle.js:70251)
+[Error] Fetch API cannot load http://0.0.0.0:5000/generate-workout due to access control checks.
+	(anonymous function) (bundle.js:3488)
+	generateWorkout (bundle.js:3474)
+	callCallback (bundle.js:68310)
+	dispatchEvent
+	invokeGuardedCallbackDev (bundle.js:68354)
+	invokeGuardedCallback (bundle.js:68411)
+	invokeGuardedCallbackAndCatchFirstError (bundle.js:68425)
+	executeDispatch (bundle.js:72568)
+	processDispatchQueueItemsInOrder (bundle.js:72594)
+	processDispatchQueue (bundle.js:72605)
+	dispatchEventsForPlugins (bundle.js:72614)
+	batchedUpdates$1 (bundle.js:87192)
+	batchedUpdates (bundle.js:68158)
+	dispatchEventForPluginEventSystem (bundle.js:72773)
+	dispatchEventWithEnableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay (bundle.js:70280)
+	dispatchEvent (bundle.js:70274:89)
+	dispatchDiscreteEvent (bundle.js:70251)
+[Error] Error generating workout: – TypeError: Load failed
+TypeError: Load failed
+	(anonymous function) (bundle.js:3515)
+[Error] WebSocket connection to 'wss://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev:3000/ws' failed: There was a bad response from the server.
