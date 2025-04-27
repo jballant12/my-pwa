@@ -170,9 +170,9 @@ useEffect(() => {
         </Select>
       </div>
 
-      <Button onClick={handleStartConsult} className="w-full bg-green-500 hover:bg-green-600">
-        Start Consult
-      </Button>
+      <div className="w-full max-w-2xl mx-auto">
+        <ParentComponent />
+      </div>
 
       </div>
       <div id="chat" className="mt-6 p-4 bg-white/10 backdrop-blur-sm shadow-lg rounded-lg overflow-auto max-h-[60vh] md:max-h-80 w-full max-w-2xl mx-auto">
