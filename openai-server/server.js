@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { Configuration, OpenAIApi } = require('openai');
+const OpenAI = require('openai');
 const admin = require("firebase-admin"); 
 
 const serviceAccount = require("./path/to/your/serviceAccountKey.json"); 
@@ -15,22 +15,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY
 });
-const openai = new OpenAIApi(configuration);
-
 
 app.post('/generate-workout', async (req, res) => {
   try {
-    const { userId, today, goals, userDetails } = req.body; 
-
-    const userRef = db.collection('users').doc(userId);
-    const userDoc = await userRef.get();
-    if (!userDoc.exists) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-    const weeklyTrainingSplit = userDoc.data().weeklyTrainingSplit;
+    const { weeklyTrainingSplit, today, goals, userDetails } = req.body;
 
     const prompt = `Generate a detailed workout plan for ${today} based on this weekly split: ${weeklyTrainingSplit}. 
     User's goals: ${goals}
@@ -49,23 +40,21 @@ app.post('/generate-workout', async (req, res) => {
       temperature: 0.7,
     });
 
-    res.json({ workout: completion.data.choices[0].message.content.trim() });
+    res.json({ workout: completion.choices[0].message.content.trim() });
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({ error: 'Failed to generate workout' });
   }
 });
 
-
-
 app.listen(3001, '0.0.0.0', () => {
   console.log('Server running on port 3001');
 });
 
 require('dotenv').config();
-const OpenAI = require('openai');
+const OpenAI2 = require('openai');
 
-const openaiImage = new OpenAI({
+const openaiImage = new OpenAI2({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
@@ -110,6 +99,7 @@ app.post('/analyze-image', async (req, res) => {
     res.status(500).json({ error: 'Error analyzing image' });
   }
 });
+
 
 const PORT = process.env.PORT || 3001;
 const HOST = '0.0.0.0';
