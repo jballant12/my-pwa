@@ -156,23 +156,27 @@ useEffect(() => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black text-white p-4">
-      <h1 className="text-3xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-violet-500 mb-6">Consult</h1>
+      <Navigation />
+      <div className="md:ml-20">
+        <h1 className="text-3xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-violet-500 mb-6">Consult</h1>
       
-      <div className="mb-4">
+      <div className="mb-4 w-full max-w-md mx-auto">
         <Select 
-          value={selectedTrainer}
+          value={selectedTrainer || ""}
           onValueChange={(value) => {
             console.log("Trainer selected:", value);
             setSelectedTrainer(value);
           }}>
-          <SelectTrigger>
+          <SelectTrigger className="w-full">
             <SelectValue placeholder="Select Trainer" />
           </SelectTrigger>
           <SelectContent>
             {trainers.map((trainer) => (
-              <SelectItem key={trainer.id} value={trainer.id}>
-                {trainer.name}
-              </SelectItem>
+              trainer.name && (
+                <SelectItem key={trainer.id} value={trainer.id}>
+                  {trainer.name}
+                </SelectItem>
+              )
             ))}
           </SelectContent>
         </Select>
@@ -182,7 +186,8 @@ useEffect(() => {
         Start Consult
       </Button>
 
-      <div id="chat" className="mt-6 p-4 bg-white shadow-lg rounded-lg overflow-auto max-h-80">
+      </div>
+      <div id="chat" className="mt-6 p-4 bg-white/10 backdrop-blur-sm shadow-lg rounded-lg overflow-auto max-h-[60vh] md:max-h-80 w-full max-w-2xl mx-auto">
         {chatHistory.map((msg, index) => (
           <div key={index} className={msg.role === "assistant" ? "text-blue-600" : "text-black"}>
             {msg.content}
