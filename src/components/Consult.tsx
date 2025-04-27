@@ -176,10 +176,10 @@ useEffect(() => {
         </Select>
       </div>
 
-      
+
 
       </div>
-      
+
       {/* Vapi Call Button */}
       <div className="flex justify-center my-4">
         <button
@@ -188,7 +188,7 @@ useEffect(() => {
               console.error("Vapi instance or trainer data is missing.");
               return;
             }
-            
+
             if (vapiInstance.started) {
               vapiInstance.stop();
             } else {
