@@ -1,26 +1,27 @@
+
 const express = require('express');
 const cors = require('cors');
 const OpenAI = require('openai');
-const admin = require("firebase-admin"); 
+const admin = require("firebase-admin");
+const path = require('path');
 
 admin.initializeApp();
 const db = admin.firestore();
 
 const app = express();
 
-// Better CORS configuration
-app.use(cors({
-  origin: '*',
-  methods: ['GET', 'POST'],
-  credentials: true
-}));
-
+// CORS and middleware
+app.use(cors());
 app.use(express.json());
+
+// Serve static files from React build
+app.use(express.static(path.join(__dirname, '../build')));
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 });
 
+// API routes
 app.post('/generate-workout', async (req, res) => {
   try {
     const { weeklyTrainingSplit, today, userSettings } = req.body;
@@ -50,18 +51,6 @@ app.post('/generate-workout', async (req, res) => {
     console.error('Error:', error);
     res.status(500).json({ error: 'Failed to generate workout', details: error.message });
   }
-});
-
-const PORT = 5000;
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Server running on port ${PORT}`);
-});
-
-require('dotenv').config();
-const OpenAI2 = require('openai');
-
-const openaiImage = new OpenAI2({
-  apiKey: process.env.OPENAI_API_KEY,
 });
 
 app.post('/analyze-image', async (req, res) => {
@@ -104,4 +93,14 @@ app.post('/analyze-image', async (req, res) => {
     console.error('Error analyzing image with OpenAI:', error.response?.data || error.message);
     res.status(500).json({ error: 'Error analyzing image' });
   }
+});
+
+// Serve React app for all other routes
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../build', 'index.html'));
+});
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running on port ${PORT}`);
 });
