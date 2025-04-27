@@ -8,7 +8,10 @@ admin.initializeApp();
 const db = admin.firestore();
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: true,
+  credentials: true
+}));
 app.use(express.json());
 
 const openai = new OpenAI({
