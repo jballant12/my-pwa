@@ -32,6 +32,7 @@ export default function Consult() {
       throw new Error("TrainerContext must be used within a TrainerProvider");
   }
   const { trainers } = context;
+  console.log("Trainers in Consult:", trainers);
   const userContext = useContext(UserContext);
   if (!userContext) {
     throw new Error("UserContext must be used within a UserProvider");

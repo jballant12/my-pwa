@@ -123,8 +123,17 @@ export default function Trainer() {
           knowledgeBases,
         };
 
+        const newTrainer = {
+          name: trainerName,
+          personality: personality,
+          coachingStyle: trainerCoachingStyle,
+          trainervoice: trainerVoice
+        };
         const docRef = await addDoc(collection(db, 'Users', user.uid, 'trainers'), newTrainer);
-        const newTrainerData = { id: docRef.id, name: trainerName };
+        const newTrainerData = { 
+          id: docRef.id, 
+          ...newTrainer 
+        };
 
         // Update the trainers list and set the current trainer to the newly added one
         setTrainers([...trainers, newTrainerData]);

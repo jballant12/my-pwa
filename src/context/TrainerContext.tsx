@@ -33,11 +33,12 @@ export const TrainerProvider: React.FC<{ children: React.ReactNode }> = ({ child
             const data = doc.data();
             const trainerData = {
               id: doc.id,
-              name: data.name || data.firstName || 'Unnamed Trainer',
+              name: data.name || 'Unnamed Trainer',
               coachingStyle: data.coachingStyle || '',
               personality: data.personality || '',
               trainervoice: data.trainervoice || ''
             };
+            console.log("Fetched trainer data:", trainerData);
             console.log("Processed trainer:", trainerData);
             return trainerData;
           });
