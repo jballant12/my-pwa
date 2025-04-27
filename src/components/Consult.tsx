@@ -155,8 +155,8 @@ useEffect(() => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-100 to-blue-200 p-4">
-      <h1 className="text-3xl font-bold text-center text-blue-800 mb-6">Consult</h1>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black text-white p-4">
+      <h1 className="text-3xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-violet-500 mb-6">Consult</h1>
       
       <div className="mb-4">
         <Select onValueChange={(value) => {

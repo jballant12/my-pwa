@@ -1,14 +1,18 @@
+
 import * as React from "react";
 import * as LabelPrimitive from "@radix-ui/react-label";
 
-export const Label = React.forwardRef<HTMLLabelElement, React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root>>(
-  (props, ref) => (
-    <LabelPrimitive.Root
-      ref={ref}
-      className="block text-sm font-medium text-gray-700"
-      {...props}
-    />
-  )
-);
+const Label = React.forwardRef<
+  React.ElementRef<typeof LabelPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root>
+>(({ className, ...props }, ref) => (
+  <LabelPrimitive.Root
+    ref={ref}
+    className="text-sm font-medium text-white/90 mb-2 block"
+    {...props}
+  />
+));
 
-Label.displayName = "Label";
+Label.displayName = LabelPrimitive.Root.displayName;
+
+export { Label };
