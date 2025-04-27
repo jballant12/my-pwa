@@ -118,7 +118,7 @@ export default function Trainer() {
           name: trainerName,
           personality,
           coachingStyle: trainerCoachingStyle,
-          trainerVoice,
+          trainervoice: trainerVoice, // Fix property name to match what Consult expects
           knowledgeBases,
         };
 

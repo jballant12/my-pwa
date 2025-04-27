@@ -35,7 +35,7 @@ export default function Consult() {
     throw new Error("UserContext must be used within a UserProvider");
 }
 const { userSettings } = userContext; 
-  const [selectedTrainer, setSelectedTrainer] = useState<string | null>(null); // Selected trainer ID
+  const [selectedTrainer, setSelectedTrainer] = useState<string>(""); // Selected trainer ID
   const [trainerData, setTrainerData] = useState<Trainer | null>(null); // Trainer data
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]); // Chat history
   const [vapiInstance, setVapiInstance] = useState<Vapi | null>(null); // Vapi instance
@@ -159,10 +159,12 @@ useEffect(() => {
       <h1 className="text-3xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-violet-500 mb-6">Consult</h1>
       
       <div className="mb-4">
-        <Select onValueChange={(value) => {
-          console.log("Trainer selected:", value);
-        setSelectedTrainer(value)
-        }}>
+        <Select 
+          value={selectedTrainer}
+          onValueChange={(value) => {
+            console.log("Trainer selected:", value);
+            setSelectedTrainer(value);
+          }}>
           <SelectTrigger>
             <SelectValue placeholder="Select Trainer" />
           </SelectTrigger>
