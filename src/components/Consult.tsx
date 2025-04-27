@@ -159,9 +159,9 @@ useEffect(() => {
           </SelectTrigger>
           <SelectContent>
             {trainers && trainers.length > 0 ? (
-              trainers.map((trainer) => (
-                <SelectItem key={trainer.id} value={trainer.id || 'default'}>
-                  {trainer.name || 'Unnamed Trainer'}
+              trainers.filter(trainer => trainer.name).map((trainer) => (
+                <SelectItem key={trainer.id} value={trainer.id}>
+                  {trainer.name}
                 </SelectItem>
               ))
             ) : (
