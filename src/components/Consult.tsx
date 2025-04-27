@@ -172,11 +172,14 @@ export default function Consult() {
         </div>
 
         <div id="chat" className="mt-6 p-4 bg-white/10 backdrop-blur-sm shadow-lg rounded-lg overflow-auto max-h-[60vh] md:max-h-80 w-full max-w-2xl mx-auto">
-          {chatHistory.map((msg, index) => (
-            <div key={index} className={`mb-2 p-2 rounded ${msg.role === "assistant" ? "bg-blue-500/20" : "bg-green-500/20"}`}>
-              <strong>{msg.role}: </strong>{msg.content}
-            </div>
-          ))}
+          {chatHistory
+            .filter(msg => msg.role !== 'system')
+            .map((msg, index) => (
+              <div key={index} className={`mb-2 p-2 rounded ${msg.role === "assistant" ? "bg-blue-500/20" : "bg-green-500/20"}`}>
+                <strong>{msg.role === "assistant" ? "Trainer" : "You"}: </strong>
+                {msg.content}
+              </div>
+            ))}
         </div>
       </div>
     </div>
