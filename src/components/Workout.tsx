@@ -61,7 +61,7 @@ const Workout: React.FC = () => {
       }
       
       console.log("Generating workout with data:", {weeklyTrainingSplit, today, userSettings});
-      const response = await fetch('https://5000-' + window.location.hostname + '/generate-workout', {
+      const response = await fetch('https://' + window.location.hostname.replace('3000-', '5000-') + '/generate-workout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -1,10 +1,11 @@
+
 const express = require('express');
 const cors = require('cors');
 const OpenAI = require('openai');
 
 const app = express();
 app.use(cors());
-app.use(express.json());
+app.use(express.json({limit: '50mb'}));
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
@@ -13,6 +14,10 @@ const openai = new OpenAI({
 app.post('/generate-workout', async (req, res) => {
   try {
     const { weeklyTrainingSplit, today, userSettings } = req.body;
+    
+    if (!weeklyTrainingSplit || !today || !userSettings) {
+      return res.status(400).json({ error: 'Missing required data' });
+    }
 
     const prompt = `Generate a workout for ${today} based on this split: ${weeklyTrainingSplit}. 
     User details: Height: ${userSettings.height}, Weight: ${userSettings.weight}, 
@@ -31,16 +36,15 @@ app.post('/generate-workout', async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Server running on port ${PORT}`);
-}).on('error', (err) => {
-  if (err.code === 'EADDRINUSE') {
-    console.log(`Port ${PORT} is busy, trying ${PORT + 1}`);
-    app.listen(PORT + 1, '0.0.0.0', () => {
-      console.log(`Server running on port ${PORT + 1}`);
+const startServer = (port) => {
+  try {
+    app.listen(port, '0.0.0.0', () => {
+      console.log(`Server running on port ${port}`);
     });
-  } else {
-    console.error('Server error:', err);
+  } catch (error) {
+    console.error(`Failed to start server on port ${port}:`, error);
+    process.exit(1);
   }
-});
+};
+
+startServer(5000);
