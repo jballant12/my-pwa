@@ -1,0 +1,46 @@
+Uncaught runtime errors:
+×
+ERROR
+undefined is not a constructor (evaluating 'new _vapi_ai_web__WEBPACK_IMPORTED_MODULE_8__.Vapi("ee125a2c-2039-4a9e-8384-806f6abc1824")')
+@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:715:68
+commitHookEffectListMount@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:84425:36
+commitPassiveMountOnFiber@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:85918:42
+commitPassiveMountEffects_complete@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:85890:38
+commitPassiveMountEffects_begin@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:85880:45
+commitPassiveMountEffects@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:85870:38
+flushPassiveEffectsImpl@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:87753:32
+flushPassiveEffects@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:87706:41
+commitRootImpl@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:87665:28
+commitRoot@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:87448:23
+performSyncWorkOnRoot@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:86957:17
+flushSyncCallbacks@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:74932:34
+@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:86562:35
+ERROR
+undefined is not a constructor (evaluating 'new _vapi_ai_web__WEBPACK_IMPORTED_MODULE_8__.Vapi("ee125a2c-2039-4a9e-8384-806f6abc1824")')
+@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:715:68
+commitHookEffectListMount@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:84425:36
+invokePassiveEffectMountInDEV@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:86114:42
+invokeEffectsInDev@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:88011:29
+commitDoubleInvokeEffectsInDEV@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:87994:29
+flushPassiveEffectsImpl@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:87767:39
+flushPassiveEffects@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:87706:41
+commitRootImpl@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:87665:28
+commitRoot@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:87448:23
+performSyncWorkOnRoot@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:86957:17
+flushSyncCallbacks@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:74932:34
+@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:86562:35
+ERROR
+undefined is not a constructor (evaluating 'new _vapi_ai_web__WEBPACK_IMPORTED_MODULE_8__.Vapi("ee125a2c-2039-4a9e-8384-806f6abc1824")')
+@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:715:68
+commitHookEffectListMount@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:84425:36
+commitPassiveMountOnFiber@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:85918:42
+commitPassiveMountEffects_complete@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:85890:38
+commitPassiveMountEffects_begin@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:85880:45
+commitPassiveMountEffects@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:85870:38
+flushPassiveEffectsImpl@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:87753:32
+flushPassiveEffects@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:87706:41
+commitRootImpl@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:87665:28
+commitRoot@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:87448:23
+performSyncWorkOnRoot@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:86957:17
+flushSyncCallbacks@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:74932:34
+@https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/static/js/bundle.js:86562:35
