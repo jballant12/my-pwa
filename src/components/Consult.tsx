@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Button } from "./ui/button";
+import ParentComponent from './examples/parent-component';
 import Navigation from './Navigation';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { auth, db } from '../firebase';  // Import Firestore database
