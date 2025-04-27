@@ -8,7 +8,7 @@ import { getAuth } from 'firebase/auth';
 import { query, where } from 'firebase/firestore';
 import { TrainerContext } from '../context/TrainerContext';
 import { UserContext } from '../context/UserContext';
-import { Vapi } from '@vapi-ai/web';
+import Vapi from '@vapi-ai/web';
 
 
 // Define types
