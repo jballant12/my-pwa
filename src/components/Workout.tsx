@@ -61,7 +61,7 @@ const Workout: React.FC = () => {
       }
       
       console.log("Generating workout with data:", {weeklyTrainingSplit, today, userSettings});
-      const response = await fetch('/api/generate-workout', {
+      const response = await fetch('https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev/generate-workout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
