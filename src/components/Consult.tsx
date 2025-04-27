@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useContext } from 'react';
 import { Button } from "./ui/button";
 import Navigation from './Navigation';
@@ -43,6 +42,7 @@ export default function Consult() {
   const [isCallActive, setIsCallActive] = useState(false);
   const [partialTranscript, setPartialTranscript] = useState<string>("");
   const [finalTranscripts, setFinalTranscripts] = useState<string[]>([]);
+  const [trainingPlan, setTrainingPlan] = useState<any>(null);
 
   useEffect(() => {
     const vapi = new Vapi("ee125a2c-2039-4a9e-8384-806f6abc1824");
@@ -80,7 +80,7 @@ export default function Consult() {
 
     const saveTrainingPlanToFirebase = async (trainingData: any) => {
       if (!auth.currentUser) return;
-      
+
       try {
         const trainingPlanRef = doc(collection(db, 'Users', auth.currentUser.uid, 'training_plan'));
         await setDoc(trainingPlanRef, {
@@ -88,6 +88,7 @@ export default function Consult() {
           createdAt: new Date(),
           trainerId: selectedTrainer
         });
+        setTrainingPlan(trainingData); //added this line to update the state.
         console.log("Training plan saved successfully");
       } catch (error) {
         console.error("Error saving training plan:", error);
@@ -215,6 +216,15 @@ export default function Consult() {
               </div>
             ))}
         </div>
+        {/* Add training plan display here */}
+        {trainingPlan && (
+          <div className="mt-4 p-4 bg-white/10 backdrop-blur-sm rounded-lg">
+            <h2 className="text-xl font-semibold mb-2">Training Plan</h2>
+            <pre className="text-sm text-white/90">
+              {JSON.stringify(trainingPlan, null, 2)}
+            </pre>
+          </div>
+        )}
       </div>
     </div>
   );
