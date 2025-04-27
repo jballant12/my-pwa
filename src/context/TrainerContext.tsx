@@ -26,24 +26,37 @@ export const TrainerProvider: React.FC<{ children: React.ReactNode }> = ({ child
     if (user) {
       console.log("Setting up trainer listener for user:", user.uid);
       const trainersRef = collection(db, 'Users', user.uid, 'trainers');
+      
       const unsubscribe = onSnapshot(trainersRef, (snapshot) => {
-        const trainersList = snapshot.docs.map(doc => ({
-          id: doc.id,
-          name: doc.data().name,
-          coachingStyle: doc.data().coachingStyle,
-          personality: doc.data().personality,
-          trainervoice: doc.data().trainervoice,
-        }));
-        console.log("Fetched trainers:", trainersList);
-        setTrainers(trainersList);
+        try {
+          const trainersList = snapshot.docs.map(doc => {
+            const data = doc.data();
+            return {
+              id: doc.id,
+              name: data.name || 'Unnamed Trainer',
+              coachingStyle: data.coachingStyle || '',
+              personality: data.personality || '',
+              trainervoice: data.trainervoice || '',
+            };
+          }).filter(trainer => trainer.name && trainer.id); // Only include trainers with valid names and IDs
+          
+          console.log("Fetched trainers:", trainersList);
+          setTrainers(trainersList);
+        } catch (error) {
+          console.error("Error processing trainers:", error);
+          setTrainers([]);
+        }
+      }, (error) => {
+        console.error("Error fetching trainers:", error);
+        setTrainers([]);
       });
 
-      // Cleanup the listener on unmount
       return () => unsubscribe();
     } else {
-      setTrainers([]); // Reset trainers when no user is logged in
+      console.log("No user logged in");
+      setTrainers([]);
     }
-  }, [auth.currentUser]); // Re-run when user changes
+  }, [auth.currentUser?.uid]); // Only re-run when user ID changes
 
   // Add a new trainer
   const addTrainer = async (trainer: Trainer) => {

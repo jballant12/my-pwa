@@ -172,11 +172,15 @@ useEffect(() => {
             <SelectValue placeholder="Select Trainer" />
           </SelectTrigger>
           <SelectContent>
-            {trainers.map((trainer) => (
-            <SelectItem key={trainer.id} value={trainer.id || 'default'}>
-              {trainer.name || 'Unnamed Trainer'}
-            </SelectItem>
-          ))}
+            {trainers && trainers.length > 0 ? (
+              trainers.map((trainer) => (
+                <SelectItem key={trainer.id} value={trainer.id}>
+                  {trainer.name}
+                </SelectItem>
+              ))
+            ) : (
+              <SelectItem value="no-trainers">No trainers available</SelectItem>
+            )}
           </SelectContent>
         </Select>
       </div>
