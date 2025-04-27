@@ -3,7 +3,7 @@ import { Card, CardContent } from "./ui/card";
 import { Button } from "./ui/button";
 import Navigation from './Navigation';
 import { auth, db } from '../firebase';
-import { doc, getDoc, collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
 import { UserContext } from '../context/UserContext';
 
 const Workout: React.FC = () => {
@@ -32,7 +32,13 @@ const Workout: React.FC = () => {
           }));
           console.log("All training plans:", docs);
 
-          const latestPlan = docs[0];
+          interface TrainingPlan {
+  id: string;
+  weekly_training_split?: string;
+  goals?: string;
+}
+
+const latestPlan = docs[0] as TrainingPlan;
           console.log("Using plan:", latestPlan);
 
           setWeeklyTrainingSplit(latestPlan.weekly_training_split || '');
