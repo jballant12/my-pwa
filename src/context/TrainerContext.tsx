@@ -33,12 +33,12 @@ export const TrainerProvider: React.FC<{ children: React.ReactNode }> = ({ child
             const data = doc.data();
             return {
               id: doc.id,
-              name: data.name || 'Unnamed Trainer',
+              name: data.firstName || data.name || 'Unnamed Trainer', // Try firstName first
               coachingStyle: data.coachingStyle || '',
               personality: data.personality || '',
               trainervoice: data.trainervoice || '',
             };
-          }).filter(trainer => trainer.name && trainer.id); // Only include trainers with valid names and IDs
+          });
           
           console.log("Fetched trainers:", trainersList);
           setTrainers(trainersList);
