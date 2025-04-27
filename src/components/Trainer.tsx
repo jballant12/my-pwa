@@ -152,15 +152,16 @@ export default function Trainer() {
           {/* Current Trainer Selection */}
           <div className="mb-6">
             <Label htmlFor="currentTrainer">Current Trainer</Label>
-            <Select value={currentTrainer || ''} onValueChange={(value) => setCurrentTrainer(value)}>
+            <Select value={currentTrainer || 'default'} onValueChange={(value) => setCurrentTrainer(value)}>
               <SelectTrigger id="currentTrainer">
                 <SelectValue placeholder="Select a trainer" />
               </SelectTrigger>
               <SelectContent>
                 {trainers.map((trainer) => (
-                  <SelectItem key={trainer.id} value={trainer.name}>
+                  trainer.name ? 
+                  <SelectItem key={trainer.id} value={trainer.id}>
                     {trainer.name}
-                  </SelectItem>
+                  </SelectItem> : null
                 ))}
               </SelectContent>
             </Select>
