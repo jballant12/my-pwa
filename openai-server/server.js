@@ -3,16 +3,18 @@ const cors = require('cors');
 const OpenAI = require('openai');
 const admin = require("firebase-admin"); 
 
-// Initialize Firebase Admin without service account for now
 admin.initializeApp();
 const db = admin.firestore();
 
 const app = express();
+
+// Better CORS configuration
 app.use(cors({
-  origin: 'https://874d92e7-9de4-4a68-89f5-96241fb23c6a-00-15dr11hfdb7pd.riker.replit.dev',
-  credentials: true,
-  methods: ['GET', 'POST']
+  origin: '*',
+  methods: ['GET', 'POST'],
+  credentials: true
 }));
+
 app.use(express.json());
 
 const openai = new OpenAI({
@@ -22,7 +24,10 @@ const openai = new OpenAI({
 app.post('/generate-workout', async (req, res) => {
   try {
     const { weeklyTrainingSplit, today, userSettings } = req.body;
-    console.log('Received request:', { weeklyTrainingSplit, today, userSettings });
+
+    if (!weeklyTrainingSplit || !today || !userSettings) {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
 
     const prompt = `Generate a detailed workout plan for ${today} based on this weekly split: ${weeklyTrainingSplit}.
     User details:
@@ -43,12 +48,13 @@ app.post('/generate-workout', async (req, res) => {
     res.json({ workout: completion.choices[0].message.content.trim() });
   } catch (error) {
     console.error('Error:', error);
-    res.status(500).json({ error: 'Failed to generate workout' });
+    res.status(500).json({ error: 'Failed to generate workout', details: error.message });
   }
 });
 
-app.listen(3001, '0.0.0.0', () => {
-  console.log('Server running on port 3001');
+const PORT = 5000;
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running on port ${PORT}`);
 });
 
 require('dotenv').config();
@@ -99,11 +105,3 @@ app.post('/analyze-image', async (req, res) => {
     res.status(500).json({ error: 'Error analyzing image' });
   }
 });
-
-
-const PORT = process.env.PORT || 3001;
-if (!module.parent) {
-  app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Server running on port ${PORT}`);
-  });
-}
