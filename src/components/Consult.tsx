@@ -5,7 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import { auth, db } from '../firebase';  // Import Firestore database
 import { doc, collection, getDocs, getDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
-import Vapi from '@vapi-ai/web';
+import { useVapi } from '@vapi-ai/react';
 import { query, where } from 'firebase/firestore';
 import { TrainerContext } from '../context/TrainerContext';
 import { UserContext } from '../context/UserContext';
