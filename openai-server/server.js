@@ -1,11 +1,16 @@
-
 const express = require('express');
 const cors = require('cors');
 const OpenAI = require('openai');
 
 const app = express();
-app.use(cors());
-app.use(express.json({limit: '50mb'}));
+app.use(express.json());
+
+// Enable CORS for all routes
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
@@ -14,7 +19,7 @@ const openai = new OpenAI({
 app.post('/generate-workout', async (req, res) => {
   try {
     const { weeklyTrainingSplit, today, userSettings } = req.body;
-    
+
     if (!weeklyTrainingSplit || !today || !userSettings) {
       return res.status(400).json({ error: 'Missing required data' });
     }

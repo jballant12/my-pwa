@@ -48,7 +48,12 @@ export default function Consult() {
     const vapi = new Vapi("ee125a2c-2039-4a9e-8384-806f6abc1824");
     setVapiInstance(vapi);
 
-    vapi.on("transcript", (message) => {
+    interface VapiTranscriptMessage {
+      type: 'partial' | 'final';
+      transcript: string;
+    }
+
+    vapi.on("transcript" as any, (message: VapiTranscriptMessage) => {
       if (message.type === "partial") {
         setPartialTranscript(message.transcript);
       } else if (message.type === "final") {
