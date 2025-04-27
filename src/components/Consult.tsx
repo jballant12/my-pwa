@@ -120,14 +120,23 @@ useEffect(() => {
       console.error("Vapi instance or trainer data is missing.");
       return;
     }
+
     const assistantOverrides = {
       variableValues: {
-        ...userSettings,
-        ...trainerData,
-        voiceID: voiceID,
+        // User details
+        user_name: userSettings.username,
+        user_height: userSettings.height,
+        user_weight: userSettings.weight,
+        user_training_level: userSettings.gymExpertise,
+        // Trainer details
+        trainer_name: trainerData.name,
+        trainer_personality: trainerData.personality,
+        trainer_coaching_style: trainerData.coachingStyle,
+        voiceId: trainerData.trainervoice // Use trainer's voice ID
       },
     };
 
+    console.log("Starting Vapi with variables:", assistantOverrides);
     vapiInstance.start("9c3fc777-e009-4916-80db-6bb8f5fec2e2", assistantOverrides);
   };
 
