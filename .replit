@@ -22,8 +22,8 @@ mode = "parallel"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cd openai-server && npm install && node server.js"
+args = "cd openai-server && node server.js"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "npm install && npm start"
+args = "npm start"

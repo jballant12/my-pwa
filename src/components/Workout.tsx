@@ -19,7 +19,7 @@ const Workout: React.FC = () => {
       if (!auth.currentUser) return;
 
       try {
-        const trainingPlanRef = doc(collection(db, 'Users', auth.currentUser.uid, 'training_plan'));
+        const trainingPlanRef = doc(db, 'Users', auth.currentUser.uid, 'training_plan', 'current');
         const trainingPlanDoc = await getDoc(trainingPlanRef);
         
         if (trainingPlanDoc.exists()) {
@@ -42,6 +42,7 @@ const Workout: React.FC = () => {
     const today = days[new Date().getDay()];
 
     try {
+      console.log("Generating workout with data:", {weeklyTrainingSplit, today, userSettings});
       const response = await fetch('http://0.0.0.0:3001/generate-workout', {
         method: 'POST',
         headers: {
