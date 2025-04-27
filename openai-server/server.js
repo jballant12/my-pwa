@@ -1,3 +1,48 @@
+
+const express = require('express');
+const cors = require('cors');
+const { Configuration, OpenAIApi } = require('openai');
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+const configuration = new Configuration({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+const openai = new OpenAIApi(configuration);
+
+app.post('/generate-workout', async (req, res) => {
+  try {
+    const { weeklyTrainingSplit, today, userDetails } = req.body;
+
+    const prompt = `Generate a detailed workout plan for ${today} based on this weekly split: ${weeklyTrainingSplit}. 
+    User details:
+    - Height: ${userDetails.height}
+    - Weight: ${userDetails.weight}
+    - Injuries: ${userDetails.injuries}
+    - Experience Level: ${userDetails.gymExpertise}
+    
+    Format the workout with exercises, sets, reps, and any special instructions.`;
+
+    const completion = await openai.createCompletion({
+      model: "gpt-4",
+      prompt: prompt,
+      max_tokens: 500,
+      temperature: 0.7,
+    });
+
+    res.json({ workout: completion.data.choices[0].text.trim() });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Failed to generate workout' });
+  }
+});
+
+app.listen(3001, '0.0.0.0', () => {
+  console.log('Server running on port 3001');
+});
+
 // server.js
 require('dotenv').config();
 const express = require('express');
