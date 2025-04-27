@@ -61,6 +61,7 @@ app.post('/analyze-image', async (req, res) => {
 });
 
 const PORT = process.env.PORT || 3001;
+const HOST = '0.0.0.0';
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

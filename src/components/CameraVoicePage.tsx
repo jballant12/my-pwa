@@ -29,7 +29,7 @@ export default function CameraVoicePage({ stream }: CameraVoicePageProps) {
   const analyzeCapturedImage = useCallback(async (imageDataUrl: string) => {
     console.log('Sending image to server for analysis...');
     try {
-      const response = await fetch('http://localhost:3001/analyze-image', {
+      const response = await fetch('http://0.0.0.0:3001/analyze-image', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ imageDataUrl }),
