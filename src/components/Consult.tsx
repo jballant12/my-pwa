@@ -4,7 +4,7 @@ import { Button } from "./ui/button";
 import Navigation from './Navigation';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { auth, db } from '../firebase';
-import { doc, collection, getDocs, getDoc } from 'firebase/firestore';
+import { doc, collection, getDocs, getDoc, setDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { query, where } from 'firebase/firestore';
 import { TrainerContext } from '../context/TrainerContext';
@@ -66,8 +66,33 @@ export default function Consult() {
             content: m.content,
           })),
         ]);
+      } else if (message.type === "add-message" && message.message.role === "assistant") {
+        try {
+          const data = JSON.parse(message.message.content);
+          if (data.goals && data.vision && data.split_length && data.weekly_training_split) {
+            saveTrainingPlanToFirebase(data);
+          }
+        } catch (e) {
+          console.error("Error parsing training plan message:", e);
+        }
       }
     });
+
+    const saveTrainingPlanToFirebase = async (trainingData: any) => {
+      if (!auth.currentUser) return;
+      
+      try {
+        const trainingPlanRef = doc(collection(db, 'Users', auth.currentUser.uid, 'training_plan'));
+        await setDoc(trainingPlanRef, {
+          ...trainingData,
+          createdAt: new Date(),
+          trainerId: selectedTrainer
+        });
+        console.log("Training plan saved successfully");
+      } catch (error) {
+        console.error("Error saving training plan:", error);
+      }
+    };
 
     return () => {
       if (vapi) {
