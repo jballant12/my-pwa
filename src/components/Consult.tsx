@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Button } from "./ui/button";
+import Navigation from './Navigation';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { auth, db } from '../firebase';  // Import Firestore database
 import { doc, collection, getDocs, getDoc } from 'firebase/firestore';
