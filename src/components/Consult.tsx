@@ -125,7 +125,7 @@ useEffect(() => {
       variableValues: {
         // User details
         user_name: userSettings.username,
-        height: userSettings.height, // Fixed variable name
+        user_height: userSettings.height,
         user_weight: userSettings.weight,
         user_training_level: userSettings.gymExpertise,
         // Trainer details
