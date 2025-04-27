@@ -17,15 +17,15 @@ const openai = new OpenAI({
 
 app.post('/generate-workout', async (req, res) => {
   try {
-    const { weeklyTrainingSplit, today, goals, userDetails } = req.body;
+    const { weeklyTrainingSplit, today, userSettings } = req.body;
+    console.log('Received request:', { weeklyTrainingSplit, today, userSettings });
 
-    const prompt = `Generate a detailed workout plan for ${today} based on this weekly split: ${weeklyTrainingSplit}. 
-    User's goals: ${goals}
+    const prompt = `Generate a detailed workout plan for ${today} based on this weekly split: ${weeklyTrainingSplit}.
     User details:
-    - Height: ${userDetails.height}
-    - Weight: ${userDetails.weight}
-    - Injuries: ${userDetails.injuries}
-    - Experience Level: ${userDetails.gymExpertise}
+    - Height: ${userSettings.height}
+    - Weight: ${userSettings.weight}
+    - Injuries: ${userSettings.injuries}
+    - Experience Level: ${userSettings.gymExpertise}
 
     Format the workout with exercises, sets, reps, and any special instructions. Take into account any injuries when selecting exercises.`;
 
