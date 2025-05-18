@@ -43,7 +43,7 @@ app.post('/generate-workout', async (req, res) => {
 
 const startServer = (port) => {
   try {
-    app.listen(port, '0.0.0.0', () => {
+    app.listen(port, '0.0.0.0', '0.0.0.0', () => {
       console.log(`Server running on port ${port}`);
     });
   } catch (error) {
