@@ -1,9 +1,10 @@
+
 import React, { useState, useEffect, useContext } from 'react';
 import { Button } from "./ui/button";
 import Navigation from './Navigation';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { auth, db } from '../firebase';
-import { doc, collection, getDocs, getDoc, setDoc } from 'firebase/firestore';
+import { doc, collection, getDocs, getDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { query, where } from 'firebase/firestore';
 import { TrainerContext } from '../context/TrainerContext';
@@ -42,18 +43,12 @@ export default function Consult() {
   const [isCallActive, setIsCallActive] = useState(false);
   const [partialTranscript, setPartialTranscript] = useState<string>("");
   const [finalTranscripts, setFinalTranscripts] = useState<string[]>([]);
-  const [trainingPlan, setTrainingPlan] = useState<any>(null);
 
   useEffect(() => {
     const vapi = new Vapi("ee125a2c-2039-4a9e-8384-806f6abc1824");
     setVapiInstance(vapi);
 
-    interface VapiTranscriptMessage {
-      type: 'partial' | 'final';
-      transcript: string;
-    }
-
-    vapi.on("transcript" as any, (message: VapiTranscriptMessage) => {
+    vapi.on("transcript", (message) => {
       if (message.type === "partial") {
         setPartialTranscript(message.transcript);
       } else if (message.type === "final") {
@@ -63,21 +58,6 @@ export default function Consult() {
     });
 
     vapi.on("message", (message) => {
-      console.log("Received message:", message);
-      
-      if (message.type === "function-call" && message.functionCall?.name === "SaveTrainingType") {
-        const trainingData = {
-          goals: message.functionCall.parameters.goals,
-          vision: message.functionCall.parameters.vision,
-          split_length: message.functionCall.parameters.split_length,
-          weekly_training_split: message.functionCall.parameters.weekly_training_split,
-          timestamp: new Date()
-        };
-        console.log("Training data received:", trainingData);
-        setTrainingPlan(trainingData);
-        saveTrainingPlanToFirebase(trainingData);
-      }
-      
       if (message.type === "conversation-update") {
         setChatHistory((prevHistory) => [
           ...prevHistory,
@@ -88,27 +68,6 @@ export default function Consult() {
         ]);
       }
     });
-
-    const saveTrainingPlanToFirebase = async (trainingData: any) => {
-      if (!auth.currentUser) {
-        console.error("No authenticated user found");
-        return;
-      }
-
-      try {
-        const trainingPlanRef = doc(collection(db, 'Users', auth.currentUser.uid, 'training_plan'));
-        const dataToSave = {
-          ...trainingData,
-          trainerId: selectedTrainer,
-          createdAt: new Date()
-        };
-        
-        await setDoc(trainingPlanRef, dataToSave);
-        console.log("Training plan saved successfully to Firebase");
-      } catch (error) {
-        console.error("Error saving training plan to Firebase:", error);
-      }
-    };
 
     return () => {
       if (vapi) {
@@ -231,15 +190,6 @@ export default function Consult() {
               </div>
             ))}
         </div>
-        {/* Add training plan display here */}
-        {trainingPlan && (
-          <div className="mt-4 p-4 bg-white/10 backdrop-blur-sm rounded-lg">
-            <h2 className="text-xl font-semibold mb-2">Training Plan</h2>
-            <pre className="text-sm text-white/90">
-              {JSON.stringify(trainingPlan, null, 2)}
-            </pre>
-          </div>
-        )}
       </div>
     </div>
   );

@@ -12,15 +12,8 @@ build = ["sh", "-c", "npm run build"]
 localPort = 3000
 externalPort = 80
 
-[[ports]]
-localPort = 3001
-externalPort = 3001
-
-[[ports]]
-localPort = 5000
-externalPort = 5000
-
 [workflows]
+runButton = "Dev"
 
 [[workflows.workflow]]
 name = "Dev"
@@ -29,8 +22,8 @@ mode = "parallel"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cd openai-server && PORT=3001 node server.js &"
+args = "cd openai-server && npm install && node server.js"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "PORT=3000 npm start"
+args = "npm install && npm start"

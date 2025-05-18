@@ -47,7 +47,7 @@ export const TrainerProvider: React.FC<{ children: React.ReactNode }> = ({ child
           }).filter(trainer => trainer !== null && trainer.name);
           
           console.log("Fetched trainers:", trainersList);
-          setTrainers(trainersList.filter((t): t is Trainer => t !== null));
+          setTrainers(trainersList);
         } catch (error) {
           console.error("Error processing trainers:", error);
           setTrainers([]);
